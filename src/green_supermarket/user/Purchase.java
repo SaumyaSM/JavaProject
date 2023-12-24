@@ -7,13 +7,16 @@ package green_supermarket.user;
 import green_supermarket.dao.ProductDao;
 import green_supermarket.dao.PurchaseDao;
 import java.awt.Color;
+import java.awt.print.PrinterException;
 import java.sql.SQLException;
+import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -184,6 +187,11 @@ public class Purchase extends javax.swing.JFrame {
         jButton3.setBackground(new java.awt.Color(51, 204, 0));
         jButton3.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
         jButton3.setText("Print");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setBackground(new java.awt.Color(51, 204, 0));
         jButton4.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
@@ -467,6 +475,17 @@ public class Purchase extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        try {
+            String email = UserDashboard.UserEmail.getText();
+            MessageFormat header = new MessageFormat("Receipt-->   "+"Email"+"    "+"Total:"+total);
+            MessageFormat footer = new MessageFormat("Page{0,number,integer}");
+            jTable2.print(JTable.PrintMode.FIT_WIDTH,header,footer);
+        } catch (PrinterException ex) {
+            Logger.getLogger(Purchase.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
     private boolean isProductExist(int proID) {
         model = (DefaultTableModel) jTable2.getModel();
         if (model.getRowCount() > 0) {
@@ -489,7 +508,7 @@ public class Purchase extends javax.swing.JFrame {
         UserDashboard.jLabel18.setVisible(false);
     }
 
-    private void jTable1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseEntered
+    private void jTable1MouseEntered(java.awt.event.MouseEvent evt) {                                     
         // TODO add your handling code here:
     }
 

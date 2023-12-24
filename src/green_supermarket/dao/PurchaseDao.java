@@ -61,7 +61,7 @@ public class PurchaseDao {
     public void insert(int id, int uid, String uname, String uphone, int pid, String pname, 
             int qty, double price, double total, String pDate, String address,String rDate,
             String supplier, String status){
-        String sql = "insert into purchase values(?,?,?,?,?,?,?,?,?,?,?,?,?,?";
+        String sql = "insert into purchase values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         try {
             ps = con.prepareStatement(sql);
             ps.setInt(1, id);
