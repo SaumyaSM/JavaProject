@@ -447,7 +447,12 @@ public class SupplierDashboard extends javax.swing.JFrame {
         jLabel9.setForeground(textSelectionColor);
         jLabel10.setVisible(false);
         jLabel19.setVisible(true);
-        PurchaseDetails purchaseDetails = new PurchaseDetails();
+        PurchaseDetails purchaseDetails = null;
+        try {
+            purchaseDetails = new PurchaseDetails();
+        } catch (java.sql.SQLException ex) {
+            Logger.getLogger(SupplierDashboard.class.getName()).log(Level.SEVERE, null, ex);
+        }
         purchaseDetails.setVisible(true);
         purchaseDetails.pack();
     }//GEN-LAST:event_jLabel9MouseClicked

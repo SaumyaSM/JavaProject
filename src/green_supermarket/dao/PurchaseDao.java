@@ -10,6 +10,8 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 public class PurchaseDao {
 
@@ -107,7 +109,53 @@ public class PurchaseDao {
             ps.setInt(2, pid);
             ps.executeUpdate();
         } catch (SQLException ex) {
-            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PurchaseDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    //get specific user purchased product's values
+    public void getProductsValue(JTable table,String search, int uid) {
+        String sql = "select * from purchase where concat(id, pid, product_name) like ? and uid = ? order by id desc";
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setString(1, "%"+search+"%");
+            ps.setInt(2, uid);
+            rs = ps.executeQuery();
+            DefaultTableModel model = (DefaultTableModel) table.getModel();
+            Object [] row;
+            while (rs.next()) {
+                row = new Object[10];
+                row[0] = rs.getInt(1);
+                row[1] = rs.getInt(5);
+                row[2] = rs.getString(6);
+                row[3] = rs.getInt(7);
+                row[4] = rs.getDouble(8);
+                row[5] = rs.getDouble(9);
+                row[6] = rs.getString(10);
+                row[7] = rs.getString(12);
+                row[8] = rs.getString(13);
+                row[9] = rs.getString(14);
+                
+                model.addRow(row);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PurchaseDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    //refund product
+    public void refund(int id){
+        int x = JOptionPane.showConfirmDialog(null, "Are you sure you want to refund this product?","Refund product",JOptionPane.OK_CANCEL_OPTION,0);
+        if(x == JOptionPane.OK_OPTION){
+            try {
+                ps = con.prepareStatement("Delete from purchase where id = ?");
+                ps.setInt(1,id);
+                if(ps.executeUpdate()>0){
+                    JOptionPane.showMessageDialog(null, "Product refund successfull!");
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(ProductDao.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 }

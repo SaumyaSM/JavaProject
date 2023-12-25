@@ -108,15 +108,15 @@ public class ProductDao {
     }
     
     //insert data into product table
-    public void insert(int id, String pname, String cname, int qty, double price) {
+    public void insert(int pid, String pname, String cname, int pqty, double pprice) {
         String sql = "insert into product values(?,?,?,?,?)";
         try {
             ps = con.prepareStatement(sql);
-            ps.setInt(1, id);
+            ps.setInt(1, pid);
             ps.setString(2, pname);
             ps.setString(3, cname);
-            ps.setInt(4, id);
-            ps.setDouble(5, price);
+            ps.setInt(4, pqty);
+            ps.setDouble(5, pprice);
             if (ps.executeUpdate() > 0) {
                 JOptionPane.showMessageDialog(null, "Product added successfully");
             }
@@ -134,7 +134,7 @@ public class ProductDao {
             rs = ps.executeQuery();
             DefaultTableModel model = (DefaultTableModel) table.getModel();
             Object [] row;
-            if (rs.next()) {
+            while (rs.next()) {
                 row = new Object[5];
                 row[0] = rs.getInt(1);
                 row[1] = rs.getString(2);
@@ -177,8 +177,10 @@ public class ProductDao {
                     JOptionPane.showMessageDialog(null, "Product deleted!");
                 }
             } catch (SQLException ex) {
-                Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ProductDao.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
+    
+    
 }

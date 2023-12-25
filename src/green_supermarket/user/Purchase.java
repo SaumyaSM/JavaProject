@@ -137,6 +137,12 @@ public class Purchase extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(jTable2);
 
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField1KeyReleased(evt);
+            }
+        });
+
         jLabel1.setFont(new java.awt.Font("Helvetica Neue", 1, 15)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Purchase ID");
@@ -466,10 +472,10 @@ public class Purchase extends javax.swing.JFrame {
                 double tot = Double.parseDouble(model.getValueAt(i, 5).toString());
                 purchaseDao.insert(id, uid, uname, uphone, pid, pName, q, pri, tot, purchaseDate, address, null, null, "Pending");
                 int newQuantity = purchaseDao.getQty(pid) - q;
-                purchaseDao.qtyUpdate(pid, newQuantity);
-                setDefault();  
+                purchaseDao.qtyUpdate(pid, newQuantity);                
             }
             JOptionPane.showMessageDialog(this, "Successfully purchased");
+            setDefault(); 
         }else{
             JOptionPane.showMessageDialog(this, "You haven't purchased any products", "Warning", 2);
         }
@@ -478,13 +484,18 @@ public class Purchase extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         try {
             String email = UserDashboard.UserEmail.getText();
-            MessageFormat header = new MessageFormat("Receipt-->   "+"Email"+"    "+"Total:"+total);
+            MessageFormat header = new MessageFormat("Receipt-->   "+"Email: "+email+"    "+"Total:"+total);
             MessageFormat footer = new MessageFormat("Page{0,number,integer}");
             jTable2.print(JTable.PrintMode.FIT_WIDTH,header,footer);
         } catch (PrinterException ex) {
             Logger.getLogger(Purchase.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
+        jTable1.setModel(new DefaultTableModel(null, new Object[]{"Product ID","Product Name","Category Name","Quantity","Price"}));
+        productDao.getProductsValue(jTable1,jTextField1.getText());
+    }//GEN-LAST:event_jTextField1KeyReleased
 
     private boolean isProductExist(int proID) {
         model = (DefaultTableModel) jTable2.getModel();
