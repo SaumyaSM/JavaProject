@@ -67,9 +67,9 @@ public class UserDashboard extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
-        jLabel16 = new javax.swing.JLabel();
-        jLabel17 = new javax.swing.JLabel();
+        jCat = new javax.swing.JLabel();
+        jPro = new javax.swing.JLabel();
+        jPur = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -341,19 +341,19 @@ public class UserDashboard extends javax.swing.JFrame {
 
         jLabel6.setFont(new java.awt.Font("ITF Devanagari", 1, 17)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel6.setText("Total Purchase: ");
+        jLabel6.setText("Total Purchases: ");
 
-        jLabel15.setFont(new java.awt.Font("ITF Devanagari", 1, 17)); // NOI18N
-        jLabel15.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel15.setText("0");
+        jCat.setFont(new java.awt.Font("ITF Devanagari", 1, 17)); // NOI18N
+        jCat.setForeground(new java.awt.Color(102, 102, 102));
+        jCat.setText("0");
 
-        jLabel16.setFont(new java.awt.Font("ITF Devanagari", 1, 17)); // NOI18N
-        jLabel16.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel16.setText("0");
+        jPro.setFont(new java.awt.Font("ITF Devanagari", 1, 17)); // NOI18N
+        jPro.setForeground(new java.awt.Color(102, 102, 102));
+        jPro.setText("0");
 
-        jLabel17.setFont(new java.awt.Font("ITF Devanagari", 1, 17)); // NOI18N
-        jLabel17.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel17.setText("0.0");
+        jPur.setFont(new java.awt.Font("ITF Devanagari", 1, 17)); // NOI18N
+        jPur.setForeground(new java.awt.Color(102, 102, 102));
+        jPur.setText("0.0");
 
         javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
         jPanel13.setLayout(jPanel13Layout);
@@ -365,17 +365,17 @@ public class UserDashboard extends javax.swing.JFrame {
                     .addGroup(jPanel13Layout.createSequentialGroup()
                         .addComponent(jLabel14)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel16)
+                        .addComponent(jPro, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel13Layout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel15)
+                        .addComponent(jCat, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel17)
-                        .addGap(94, 94, 94))))
+                        .addComponent(jPur, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(48, 48, 48))))
             .addGroup(jPanel13Layout.createSequentialGroup()
                 .addGap(323, 323, 323)
                 .addComponent(jLabel13)
@@ -390,12 +390,12 @@ public class UserDashboard extends javax.swing.JFrame {
                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(jLabel6)
-                    .addComponent(jLabel15)
-                    .addComponent(jLabel17))
+                    .addComponent(jCat)
+                    .addComponent(jPur))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel14)
-                    .addComponent(jLabel16))
+                    .addComponent(jPro))
                 .addContainerGap(22, Short.MAX_VALUE))
         );
 
@@ -410,7 +410,7 @@ public class UserDashboard extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(195, Short.MAX_VALUE))
-            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 1380, Short.MAX_VALUE)
+            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -445,7 +445,11 @@ public class UserDashboard extends javax.swing.JFrame {
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
         int a = JOptionPane.showConfirmDialog(this, "Do you want to logout now?","Logout",JOptionPane.YES_NO_OPTION);
         if(a == 0){
-            new Login().setVisible(true);
+            try {
+                new Login().setVisible(true);
+            } catch (SQLException ex) {
+                Logger.getLogger(UserDashboard.class.getName()).log(Level.SEVERE, null, ex);
+            }
             this.dispose();
         }
     }//GEN-LAST:event_jLabel1MouseClicked
@@ -563,15 +567,13 @@ public class UserDashboard extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JLabel UserEmail;
+    public static javax.swing.JLabel jCat;
     private javax.swing.JLabel jLabel1;
     public static javax.swing.JLabel jLabel10;
     public static javax.swing.JLabel jLabel11;
     public static javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
     public static javax.swing.JLabel jLabel18;
     public static javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
@@ -595,5 +597,7 @@ public class UserDashboard extends javax.swing.JFrame {
     public static javax.swing.JPanel jPanel7;
     public static javax.swing.JPanel jPanel8;
     public static javax.swing.JPanel jPanel9;
+    public static javax.swing.JLabel jPro;
+    public static javax.swing.JLabel jPur;
     // End of variables declaration//GEN-END:variables
 }

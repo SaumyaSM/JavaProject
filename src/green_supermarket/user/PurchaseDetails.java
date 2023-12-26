@@ -5,6 +5,7 @@
 package green_supermarket.user;
 
 import green_supermarket.dao.PurchaseDao;
+import green_supermarket.dao.Statistics;
 import green_supermarket.dao.UserDao;
 import java.awt.Color;
 import java.sql.SQLException;
@@ -29,6 +30,7 @@ public class PurchaseDetails extends javax.swing.JFrame {
      */
     PurchaseDao pd;
     UserDao user;
+    Statistics statistics = new Statistics();
     Color textPrimaryColor = new Color(30,30,30);
     Color primaryColor = new Color(255,255,255);
     int xx, xy;
@@ -114,6 +116,12 @@ public class PurchaseDetails extends javax.swing.JFrame {
             }
         });
         jScrollPane2.setViewportView(jTable1);
+
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField1KeyReleased(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Helvetica Neue", 1, 15)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -339,6 +347,7 @@ public class PurchaseDetails extends javax.swing.JFrame {
                     "Product Name","Quantity","Price","Total","Purchased Date","Received Date",
                     "Supplier Name","Status"}));
                     pd.getProductsValue(jTable1, "", uID);
+                    statistics.user(user.getUserId(String.valueOf(UserDashboard.UserEmail.getText())));
                     clear();
                 }
             } catch (ParseException ex) {
@@ -365,6 +374,13 @@ public class PurchaseDetails extends javax.swing.JFrame {
             jTextField3.setText(model.getValueAt(RowIndex, 7).toString());
         }
     }//GEN-LAST:event_jTable1MouseClicked
+
+    private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
+        jTable1.setModel(new DefaultTableModel(null, new Object[]{"Purchase ID","Purchase ID",
+                    "Product Name","Quantity","Price","Total","Purchased Date","Received Date",
+                    "Supplier Name","Status"}));
+                    pd.getProductsValue(jTable1, jTextField1.getText(), uID);
+    }//GEN-LAST:event_jTextField1KeyReleased
 
     /**
      * @param args the command line arguments

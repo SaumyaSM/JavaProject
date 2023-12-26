@@ -440,7 +440,11 @@ public class UserSignUp extends javax.swing.JFrame {
             if(!user.isEmailExist(email)){
                 if(!user.isPhonelExist(phone)){
                     user.insert(id, username, email, password, phone, seq, ans, address1, address2);
-            new Login().setVisible(rootPaneCheckingEnabled);
+                    try {
+                        new Login().setVisible(rootPaneCheckingEnabled);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(UserSignUp.class.getName()).log(Level.SEVERE, null, ex);
+                    }
             this.dispose();
             }else{
                 JOptionPane.showMessageDialog(this, "This email address already exists","Warning",2);

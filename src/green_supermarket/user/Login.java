@@ -6,6 +6,7 @@ package green_supermarket.user;
 
 import connection.MyConnection;
 import green_supermarket.admin.AdminDashboard;
+import green_supermarket.dao.Statistics;
 import green_supermarket.supplier.SupplierDashboard;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,10 +26,12 @@ public class Login extends javax.swing.JFrame {
     /**
      * Creates new form Login
      */
+    Statistics statistics;
     private ButtonGroup bg = new ButtonGroup();
     int xx, xy;
 
-    public Login() {
+    public Login() throws SQLException {
+        this.statistics = new Statistics();
         initComponents();
         init();
     }
@@ -387,6 +390,7 @@ public class Login extends javax.swing.JFrame {
                         ud.setVisible(true);
                         ud.pack();
                         UserDashboard.UserEmail.setText(Email);
+                        statistics.user(rs.getInt(1));
                         this.dispose();
                     } else {
                         JOptionPane.showMessageDialog(this, "Incorrect email or password", "Login Failed", 2);
@@ -523,7 +527,11 @@ public class Login extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Login().setVisible(true);
+                try {
+                    new Login().setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }

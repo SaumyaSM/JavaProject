@@ -6,6 +6,8 @@ package green_supermarket.user;
 
 import green_supermarket.dao.ProductDao;
 import green_supermarket.dao.PurchaseDao;
+import green_supermarket.dao.Statistics;
+import green_supermarket.dao.UserDao;
 import java.awt.Color;
 import java.awt.print.PrinterException;
 import java.sql.SQLException;
@@ -26,6 +28,8 @@ import javax.swing.table.DefaultTableModel;
 public class Purchase extends javax.swing.JFrame {
 
     PurchaseDao purchaseDao;
+    UserDao user = new UserDao();
+    Statistics statistics = new Statistics();
     ProductDao productDao = new ProductDao();
     Color textPrimaryColor = new Color(30, 30, 30);
     Color primaryColor = new Color(255, 255, 255);
@@ -474,6 +478,7 @@ public class Purchase extends javax.swing.JFrame {
                 int newQuantity = purchaseDao.getQty(pid) - q;
                 purchaseDao.qtyUpdate(pid, newQuantity);                
             }
+            statistics.user(user.getUserId(email));
             JOptionPane.showMessageDialog(this, "Successfully purchased");
             setDefault(); 
         }else{
