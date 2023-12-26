@@ -5,8 +5,6 @@
 package green_supermarket.supplier;
 
 import connection.MyConnection;
-import green_supermarket.dao.Statistics;
-import green_supermarket.dao.UserDao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -43,10 +41,10 @@ public class SupplierDao {
     }
 
     //check email already exists
-    public boolean isEmailExist(String email) {
+    public boolean isEmailExist(String semail) {
         try {
             ps = con.prepareStatement("select * from supplier where semail = ?");
-            ps.setString(1, email);
+            ps.setString(1, semail);
             rs = ps.executeQuery();
             if (rs.next()) {
                 return true;
@@ -58,10 +56,10 @@ public class SupplierDao {
     }
 
     //check phone number already exists
-    public boolean isPhonelExist(String phone) {
+    public boolean isPhonelExist(String sphone) {
         try {
             ps = con.prepareStatement("select * from supplier where sphone = ?");
-            ps.setString(1, phone);
+            ps.setString(1, sphone);
             rs = ps.executeQuery();
             if (rs.next()) {
                 return true;
@@ -74,7 +72,7 @@ public class SupplierDao {
 
     //insert data into supplier table
     public void insert(int sid, String sname, String semail, String spassword, String sphone, String saddress1, String saddress2) {
-        String sql = "insert into user values(?,?,?,?,?,?,?)";
+        String sql = "insert into supplier values(?,?,?,?,?,?,?)";
         try {
             ps = con.prepareStatement(sql);
             ps.setInt(1, sid);

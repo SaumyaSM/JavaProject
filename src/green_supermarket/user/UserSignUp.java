@@ -99,6 +99,11 @@ public class UserSignUp extends javax.swing.JFrame {
         jLabel1.setOpaque(true);
 
         jTextField1.setFont(new java.awt.Font("Helvetica Neue", 0, 15)); // NOI18N
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
 
         jTextField2.setFont(new java.awt.Font("Helvetica Neue", 0, 15)); // NOI18N
         jTextField2.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -381,7 +386,12 @@ public class UserSignUp extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel11MouseClicked
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-  
+        try {
+            new Login().setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(UserSignUp.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.dispose();
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void jPanel1MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseDragged
@@ -410,8 +420,7 @@ public class UserSignUp extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowOpened
 
     private void btnBackMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBackMouseClicked
-        new Login().setVisible(true);
-        this.dispose();
+     
     }//GEN-LAST:event_btnBackMouseClicked
 
     private void jLabel12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel12MouseClicked
@@ -468,6 +477,10 @@ public class UserSignUp extends javax.swing.JFrame {
             evt.consume();
         }
     }//GEN-LAST:event_jTextField4KeyTyped
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
 
     /**
      * @param args the command line arguments

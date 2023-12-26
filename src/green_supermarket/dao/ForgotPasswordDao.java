@@ -22,7 +22,7 @@ public class ForgotPasswordDao {
         this.con = MyConnection.getConnection();
     }
 
-    //check email already exists
+    //check user email already exists
     public boolean isEmailExist(String email) {
         try {
             ps = con.prepareStatement("select * from user where uemail = ?");
@@ -75,4 +75,5 @@ public class ForgotPasswordDao {
             Logger.getLogger(ForgotPasswordDao.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
 }

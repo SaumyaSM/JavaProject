@@ -5,6 +5,7 @@
 package green_supermarket.user;
 
 import connection.MyConnection;
+import green_supermarket.admin.AddSuppliers;
 import green_supermarket.admin.AdminDashboard;
 import green_supermarket.dao.Statistics;
 import green_supermarket.supplier.SupplierDashboard;
@@ -244,6 +245,11 @@ public class Login extends javax.swing.JFrame {
         jRadioButton1.setForeground(new java.awt.Color(255, 255, 255));
         jRadioButton1.setText("User");
         jRadioButton1.setOpaque(true);
+        jRadioButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jRadioButton1MouseClicked(evt);
+            }
+        });
         jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jRadioButton1ActionPerformed(evt);
@@ -256,6 +262,11 @@ public class Login extends javax.swing.JFrame {
         jRadioButton2.setForeground(new java.awt.Color(255, 255, 255));
         jRadioButton2.setText("Supplier");
         jRadioButton2.setOpaque(true);
+        jRadioButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jRadioButton2MouseClicked(evt);
+            }
+        });
         jRadioButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jRadioButton2ActionPerformed(evt);
@@ -268,6 +279,11 @@ public class Login extends javax.swing.JFrame {
         jRadioButton3.setForeground(new java.awt.Color(255, 255, 255));
         jRadioButton3.setText("Admin");
         jRadioButton3.setOpaque(true);
+        jRadioButton3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jRadioButton3MouseClicked(evt);
+            }
+        });
         jRadioButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jRadioButton3ActionPerformed(evt);
@@ -402,25 +418,6 @@ public class Login extends javax.swing.JFrame {
                 try {
                     Connection con = MyConnection.getConnection();
                     PreparedStatement ps;
-                    ps = con.prepareStatement("select * from admin where aemail =? and apassword = ?");
-                    ps.setString(1, Email);
-                    ps.setString(2, Password);
-                    ResultSet rs = ps.executeQuery();
-                    if (rs.next()) {
-                        AdminDashboard ad = new AdminDashboard();
-                        ad.setVisible(true);
-                        ad.pack();
-                        this.dispose();
-                    } else {
-                        JOptionPane.showMessageDialog(this, "Incorrect email or password", "Login Failed", 2);
-                    }
-                } catch (SQLException ex) {
-                    Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }else if(jRadioButton3.isSelected()){
-                try {
-                    Connection con = MyConnection.getConnection();
-                    PreparedStatement ps;
                     ps = con.prepareStatement("select * from supplier where semail =? and spassword = ?");
                     ps.setString(1, Email);
                     ps.setString(2, Password);
@@ -429,6 +426,25 @@ public class Login extends javax.swing.JFrame {
                         SupplierDashboard sd = new SupplierDashboard();
                         sd.setVisible(true);
                         sd.pack();
+                        this.dispose();
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Incorrect email or password", "Login Failed", 2);
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else if (jRadioButton3.isSelected()) {
+                try {
+                    Connection con = MyConnection.getConnection();
+                    PreparedStatement ps;
+                    ps = con.prepareStatement("select * from admin where aemail =? and apassword = ?");
+                    ps.setString(1, Email);
+                    ps.setString(2, Password);
+                    ResultSet rs = ps.executeQuery();
+                    if (rs.next()) {
+                        AdminDashboard ad = new AdminDashboard();
+                        ad.setVisible(true);
+                        ad.pack();
                         this.dispose();
                     } else {
                         JOptionPane.showMessageDialog(this, "Incorrect email or password", "Login Failed", 2);
@@ -455,12 +471,21 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowOpened
 
     private void jLabel13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MouseClicked
-        try {
-            new UserSignUp().setVisible(true);
-        } catch (SQLException ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        if (jRadioButton1.isSelected()) {
+            try {
+                new UserSignUp().setVisible(true);
+            } catch (SQLException ex) {
+                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            this.dispose();
+        } else if (jRadioButton2.isSelected()) {
+            try {
+                new AddSuppliers().setVisible(true);
+            } catch (SQLException ex) {
+                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            this.dispose();
         }
-        this.dispose();
     }//GEN-LAST:event_jLabel13MouseClicked
 
     private void jLabel14MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel14MouseClicked
@@ -496,6 +521,24 @@ public class Login extends javax.swing.JFrame {
         int y = evt.getYOnScreen();
         this.setLocation(x - xx, y - xy);
     }//GEN-LAST:event_jPanel2MouseDragged
+
+    private void jRadioButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jRadioButton3MouseClicked
+        jLabel12.setVisible(false);
+        jLabel13.setVisible(false);
+        jLabel14.setVisible(false);
+    }//GEN-LAST:event_jRadioButton3MouseClicked
+
+    private void jRadioButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jRadioButton1MouseClicked
+        jLabel12.setVisible(true);
+        jLabel13.setVisible(true);
+        jLabel14.setVisible(true);
+    }//GEN-LAST:event_jRadioButton1MouseClicked
+
+    private void jRadioButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jRadioButton2MouseClicked
+        jLabel12.setVisible(false);
+        jLabel13.setVisible(false);
+        jLabel14.setVisible(false);
+    }//GEN-LAST:event_jRadioButton2MouseClicked
 
     /**
      * @param args the command line arguments

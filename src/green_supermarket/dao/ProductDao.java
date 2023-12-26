@@ -77,10 +77,10 @@ public class ProductDao {
     }
     
     //check product id already exists
-    public boolean isIDExist(int id) {
+    public boolean isIDExist(int pid) {
         try {
             ps = con.prepareStatement("select * from product where pid = ?");
-            ps.setInt(1, id);
+            ps.setInt(1, pid);
             rs = ps.executeQuery();
             if (rs.next()) {
                 return true;

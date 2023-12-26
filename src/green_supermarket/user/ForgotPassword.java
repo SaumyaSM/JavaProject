@@ -301,7 +301,11 @@ public class ForgotPassword extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowOpened
 
     private void btnBackMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBackMouseClicked
-        new Login().setVisible(true);
+        try {
+            new Login().setVisible(true);
+        } catch (java.sql.SQLException ex) {
+            Logger.getLogger(ForgotPassword.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.dispose();
     }//GEN-LAST:event_btnBackMouseClicked
 
@@ -361,7 +365,11 @@ public class ForgotPassword extends javax.swing.JFrame {
             if(fg.getans(email, ans)){
                 String password = String.valueOf(jPasswordField1.getPassword());
                 fg.setPassword(email, password);
-                new Login().setVisible(true);
+                try {
+                    new Login().setVisible(true);
+                } catch (java.sql.SQLException ex) {
+                    Logger.getLogger(ForgotPassword.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 this.dispose();
             }
         }

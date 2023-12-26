@@ -397,7 +397,11 @@ public class SupplierDashboard extends javax.swing.JFrame {
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
         int a = JOptionPane.showConfirmDialog(this, "Do you want to logout now?","Logout",JOptionPane.YES_NO_OPTION);
         if(a == 0){
-            new Login().setVisible(true);
+            try {
+                new Login().setVisible(true);
+            } catch (java.sql.SQLException ex) {
+                Logger.getLogger(SupplierDashboard.class.getName()).log(Level.SEVERE, null, ex);
+            }
             this.dispose();
         }
     }//GEN-LAST:event_jLabel1MouseClicked

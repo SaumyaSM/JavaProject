@@ -270,6 +270,7 @@ public class PurchaseDetails extends javax.swing.JFrame {
         jTextField4.setText(sdf.format(date));
         uID = user.getUserId(UserDashboard.UserEmail.getText());
         productTable();
+        setLocation(450,110);
     }
     
     private void productTable() {

@@ -340,6 +340,7 @@ public class Purchase extends javax.swing.JFrame {
         productTable();
         purchaseTable();
         pID = purchaseDao.getMaxRow();
+        setLocation(450,110);
     }
 
     private void productTable() {
