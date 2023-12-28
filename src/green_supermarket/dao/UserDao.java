@@ -9,6 +9,8 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 public class UserDao {
 
@@ -36,11 +38,11 @@ public class UserDao {
         return row + 1;
     }
 
-    //check email already exists
-    public boolean isEmailExist(String email) {
+    //check username already exists
+    public boolean isUsernameExist(String username) {
         try {
-            ps = con.prepareStatement("select * from user where uemail = ?");
-            ps.setString(1, email);
+            ps = con.prepareStatement("select * from user where uname = ?");
+            ps.setString(1, username);
             rs = ps.executeQuery();
             if (rs.next()) {
                 return true;
@@ -56,6 +58,21 @@ public class UserDao {
         try {
             ps = con.prepareStatement("select * from user where uphone = ?");
             ps.setString(1, phone);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+    
+    //check email already exists
+    public boolean isEmailExist(String email) {
+        try {
+            ps = con.prepareStatement("select * from user where uemail = ?");
+            ps.setString(1, email);
             rs = ps.executeQuery();
             if (rs.next()) {
                 return true;
@@ -150,6 +167,33 @@ public class UserDao {
         return value;
     }
     
+    
+    //get user table value
+    public void getutableValue(JTable table,String search) {
+        String sql = "select * from user where concat(uid, uname, uemail) like ? order by uid desc";
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setString(1, "%"+search+"%");
+            rs = ps.executeQuery();
+            DefaultTableModel model = (DefaultTableModel) table.getModel();
+            Object [] row;
+            while (rs.next()) {
+                row = new Object[9];
+                row[0] = rs.getString(1);
+                row[1] = rs.getString(2);
+                row[2] = rs.getString(3);
+                row[3] = rs.getString(4);
+                row[4] = rs.getString(5);
+                row[5] = rs.getString(6);
+                row[6] = rs.getString(7);
+                row[7] = rs.getString(8);
+                row[8] = rs.getString(9);
+                model.addRow(row);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     //get user id
     public int getUserId(String email) {
         int id = 0;

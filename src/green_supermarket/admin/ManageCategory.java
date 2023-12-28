@@ -334,7 +334,7 @@ public class ManageCategory extends javax.swing.JFrame {
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void btn_clearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_clearActionPerformed
-
+        txt_cid.setText(String.valueOf(categoryDao.getMaxRow()));
         txt_cid.setText("");
         txt_name.setText("");
         txt_des.setText("");

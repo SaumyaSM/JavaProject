@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -19,10 +20,13 @@ import javax.swing.table.DefaultTableModel;
 public class ManageProduct extends javax.swing.JFrame {
 
     ProductDao productDao;
-    Color notEdit = new Color(204,204,204);
+    Color notEdit = new Color(204, 204, 204);
     Color textPrimaryColor = new Color(30, 30, 30);
     Color primaryColor = new Color(255, 255, 255);
+    DefaultTableModel model;
     int xx, xy;
+    private int pid;
+    String[] value = new String[5];
 
     /**
      * Creates new form Manage_product
@@ -33,13 +37,24 @@ public class ManageProduct extends javax.swing.JFrame {
         init();
     }
 
-    private void init(){
+    private void init() {
+        productTable();
         txt_pid1.setBackground(notEdit);
         txt_pid1.setText(String.valueOf(productDao.getMaxRow()));
     }
-    
+
+    private void productTable() {
+        productDao.getProductsValue(jTable3, "");
+        model = (DefaultTableModel) jTable3.getModel();
+        jTable3.setRowHeight(30);
+        jTable3.setShowGrid(true);
+        jTable3.setGridColor(Color.BLACK);
+        jTable3.setBackground(Color.WHITE);
+        jTable3.setSelectionBackground(Color.LIGHT_GRAY);
+    }
+
     public boolean isEmpty() {
-        if (txt_pname.getText().length() < 10) {
+        if (txt_pname.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Enter product name", "Warning", 2);
             return false;
         }
@@ -57,6 +72,7 @@ public class ManageProduct extends javax.swing.JFrame {
         }
         return true;
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -245,23 +261,21 @@ public class ManageProduct extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_refreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_refreshActionPerformed
-
-//        jTable3.setModel(new DefaultTableModel(null, new Object[]{"Product ID", "Product Name", "Category Name", "Quantity", "Price"}));
-//        client.productTable(jTable3);
-
+        model.setRowCount(0);
+        productTable();
     }//GEN-LAST:event_btn_refreshActionPerformed
 
     private void jTable3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable3MouseClicked
 
-//        DefaultTableModel model = (DefaultTableModel) jTable3.getModel();
-//
-//        int rIndex = jTable3.getSelectedRow();
-//
-//        txt_pid1.setText(model.getValueAt(rIndex, 0).toString());
-//        txt_pname.setText(model.getValueAt(rIndex, 1).toString());
-//        txt_pcategory.setText(model.getValueAt(rIndex, 2).toString());
-//        txt_quantity.setText(model.getValueAt(rIndex, 3).toString());
-//        txt_price.setText(model.getValueAt(rIndex, 4).toString());
+        DefaultTableModel model = (DefaultTableModel) jTable3.getModel();
+
+        int rIndex = jTable3.getSelectedRow();
+
+        txt_pid1.setText(model.getValueAt(rIndex, 0).toString());
+        txt_pname.setText(model.getValueAt(rIndex, 1).toString());
+        jComboBox1.setSelectedItem(model.getValueAt(rIndex, 2).toString());
+        txt_quantity.setText(model.getValueAt(rIndex, 3).toString());
+        txt_price.setText(model.getValueAt(rIndex, 4).toString());
 
     }//GEN-LAST:event_jTable3MouseClicked
 
@@ -270,71 +284,47 @@ public class ManageProduct extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField4ActionPerformed
 
     private void btn_updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_updateActionPerformed
-
-//        String cneme = txt_name.getText();
-//        String cdes = txt_des.getText();
-//
-//        if (cneme.trim().equals("") || cdes.trim().equals("")) {
-//
-//            JOptionPane.showMessageDialog(rootPane, "Fill All Data");
-//        } else {
-//
-//            try {
-//                int id = Integer.valueOf(txt_cid.getText());
-//
-//                if (client.editCategory(id, cneme, cdes)) {
-//                    JOptionPane.showMessageDialog(rootPane, "Product Update Successfully");
-//                } else {
-//                    JOptionPane.showMessageDialog(rootPane, "Try agan");
-//                }
-//            } catch (NumberFormatException ex) {
-//                JOptionPane.showMessageDialog(rootPane, "Fill id");
-//            }
-//
-//        }
-    }//GEN-LAST:event_btn_updateActionPerformed
-
-    private void btn_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addActionPerformed
-       if(isEmpty()){
+        if (isEmpty()) {
             int pid = Integer.parseInt(txt_pid1.getText());
             String pro = txt_pname.getText();
             String cat = jComboBox1.getSelectedItem().toString();
             int pqty = Integer.parseInt(txt_quantity.getText());
             double pprice = Double.parseDouble(txt_price.getText());
-            if(!productDao.isIDExist(pid)){
-                if(!productDao.isProCatExist(pro, cat)){
+            productDao.updateProduct(pid, pro, cat, pqty, pprice);
+        }
+    }//GEN-LAST:event_btn_updateActionPerformed
+
+
+    private void btn_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addActionPerformed
+        if (isEmpty()) {
+            int pid = Integer.parseInt(txt_pid1.getText());
+            String pro = txt_pname.getText();
+            String cat = jComboBox1.getSelectedItem().toString();
+            int pqty = Integer.parseInt(txt_quantity.getText());
+            double pprice = Double.parseDouble(txt_price.getText());
+            if (!productDao.isIDExist(pid)) {
+                if (!productDao.isProCatExist(pro, cat)) {
                     productDao.insert(pid, pro, cat, pqty, pprice);
-            }else{
-                JOptionPane.showMessageDialog(this, "This product id already exists","Warning",2);
-            }              
-            }else{
-                JOptionPane.showMessageDialog(this, "Product name or category type already exists","Warning",2);
-            }            
+                } else {
+                    JOptionPane.showMessageDialog(this, "This product id already exists", "Warning", 2);
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Product name or category type already exists", "Warning", 2);
+            }
         }
     }//GEN-LAST:event_btn_addActionPerformed
-   
+
 
     private void btn_clearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_clearActionPerformed
-
-        txt_pid1.setText("");
+        txt_pid1.setText(String.valueOf(productDao.getMaxRow()));
         txt_pname.setText("");
-        jComboBox1.setSelectedIndex(-1);
+        jComboBox1.setSelectedItem(-1);
         txt_quantity.setText("");
         txt_price.setText("");
     }//GEN-LAST:event_btn_clearActionPerformed
 
     private void btn_deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_deleteActionPerformed
-        try {
-            int id = Integer.valueOf(txt_cid.getText());
-
-            if (client.removCategory(id)) {
-                JOptionPane.showMessageDialog(rootPane, "Product Deleted Successfully");
-            } else {
-                JOptionPane.showMessageDialog(rootPane, "Try again");
-            }
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(rootPane, "Fill id");
-        }
+        productDao.deleteProduct(pid);
     }//GEN-LAST:event_btn_deleteActionPerformed
 
     private void jLabel11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel11MouseClicked
@@ -388,7 +378,11 @@ public class ManageProduct extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ManageProduct().setVisible(true);
+                try {
+                    new ManageProduct().setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(ManageProduct.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }

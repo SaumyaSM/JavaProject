@@ -148,15 +148,15 @@ public class ProductDao {
         }
     }
     
-    //update user data
-    public void update(int id, String pname, String cname, int qty, double price){
+    //update product data
+    public void updateProduct(int id, String pname, String cname, int pqty, double pprice){
         String sql = "update product set pname = ?, cname =?, pqty = ?, pprice =? where pid=?";
         try {        
             ps = con.prepareStatement(sql);
             ps.setString(1, pname);
             ps.setString(2, cname);
-            ps.setInt(3, id);
-            ps.setDouble(4, price);
+            ps.setInt(3, pqty);
+            ps.setDouble(4, pprice);
             ps.setInt(5, id);
             if(ps.executeUpdate()>0){
                 JOptionPane.showMessageDialog(null, "Product updated successfully!");
@@ -167,12 +167,12 @@ public class ProductDao {
     }
     
     //delete product
-    public void delete(int id){
+    public void deleteProduct(int pid){
         int x = JOptionPane.showConfirmDialog(null, "Are you sure to delete this product?","Delete Product",JOptionPane.OK_CANCEL_OPTION,0);
         if(x == JOptionPane.OK_OPTION){
             try {
                 ps = con.prepareStatement("Delete from product where pid = ?");
-                ps.setInt(1,id);
+                ps.setInt(1,pid);
                 if(ps.executeUpdate()>0){
                     JOptionPane.showMessageDialog(null, "Product deleted!");
                 }

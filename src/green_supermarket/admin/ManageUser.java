@@ -4,6 +4,11 @@
  */
 package green_supermarket.admin;
 
+import green_supermarket.dao.UserDao;
+import java.awt.Color;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -13,17 +18,20 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ManageUser extends javax.swing.JFrame {
 
-     Client client = new Client();
-    /**
-     * Creates new form Manage_user
-     */
-    public ManageUser() {
+    UserDao user;
+    Color textPrimaryColor = new Color(30, 30, 30);
+    Color primaryColor = new Color(255, 255, 255);
+    int xx, xy;
+    private int uID;
+    DefaultTableModel model;
+    String[] value = new String[9];
+
+    public ManageUser() throws SQLException {
+        this.user = new UserDao();
         initComponents();
-        
-         client.userTable(jTable2);
+        init();
     }
 
-   
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -33,21 +41,21 @@ public class ManageUser extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
         jLabel7 = new javax.swing.JLabel();
-        txt_uid = new javax.swing.JTextField();
+        jTextField1 = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        txt_username = new javax.swing.JTextField();
+        jTextField2 = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
-        txt_uemail = new javax.swing.JTextField();
+        jTextField3 = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        txt_uphone = new javax.swing.JTextField();
-        txt_usecurity = new javax.swing.JTextField();
+        jTextField4 = new javax.swing.JTextField();
+        jTextField8 = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
-        txt_uanswer = new javax.swing.JTextField();
+        jTextField5 = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
-        txt_uaddress1 = new javax.swing.JTextField();
-        tex_uaddress2 = new javax.swing.JTextField();
+        jTextField6 = new javax.swing.JTextField();
+        jTextField7 = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
         btn_update = new javax.swing.JButton();
         btn_clear = new javax.swing.JButton();
@@ -62,6 +70,16 @@ public class ManageUser extends javax.swing.JFrame {
         setUndecorated(true);
 
         jPanel3.setBackground(new java.awt.Color(0, 204, 102));
+        jPanel3.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                jPanel3MouseDragged(evt);
+            }
+        });
+        jPanel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jPanel3MousePressed(evt);
+            }
+        });
 
         btn_udelete.setBackground(new java.awt.Color(0, 102, 102));
         btn_udelete.setForeground(new java.awt.Color(255, 255, 255));
@@ -98,6 +116,12 @@ public class ManageUser extends javax.swing.JFrame {
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("Username");
 
+        jTextField2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField2KeyTyped(evt);
+            }
+        });
+
         jLabel9.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setText("Email");
@@ -109,6 +133,14 @@ public class ManageUser extends javax.swing.JFrame {
         jLabel11.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setText("Phone");
+
+        jTextField4.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField4KeyTyped(evt);
+            }
+        });
+
+        jTextField8.setEditable(false);
 
         jLabel12.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(255, 255, 255));
@@ -192,20 +224,20 @@ public class ManageUser extends javax.swing.JFrame {
                             .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_uid, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_username, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_uemail, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_uphone, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txt_usecurity)
+                    .addComponent(jTextField8)
                     .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_uanswer)
-                    .addComponent(txt_uaddress1)
+                    .addComponent(jTextField5)
+                    .addComponent(jTextField6)
                     .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel15)
                     .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -217,7 +249,7 @@ public class ManageUser extends javax.swing.JFrame {
                         .addComponent(btn_update, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_udelete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(tex_uaddress2)
+                    .addComponent(jTextField7)
                     .addComponent(btn_clear, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(40, 40, 40)
                 .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -232,19 +264,19 @@ public class ManageUser extends javax.swing.JFrame {
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(jLabel12)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txt_usecurity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jLabel13)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txt_uanswer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jLabel15)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txt_uaddress1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jLabel16)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(tex_uaddress2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(btn_update)
@@ -254,15 +286,15 @@ public class ManageUser extends javax.swing.JFrame {
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(jLabel7)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txt_uid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jLabel8)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txt_username, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jLabel9)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txt_uemail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jLabel10)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -273,7 +305,7 @@ public class ManageUser extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel11)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txt_uphone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(29, 29, 29)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txt_search, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -301,111 +333,207 @@ public class ManageUser extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btn_udeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_udeleteActionPerformed
+    private void init() {
+        setLocation(410, 300);
+        uID = user.getUserId(AdminDashboard.UserEmail.getText());
+        value = user.getUserValue(uID);
+        userTable();
+        setValue();
+    }
 
-           try{
-                 int id = Integer.valueOf(txt_uid.getText());
-                  
-                  if(client.delete_user(id)){
-                        JOptionPane.showMessageDialog(rootPane, "Categor Delete Successfully");
-                          }
-                 else{
-                      JOptionPane.showMessageDialog(rootPane, "Try agan");
-             }
-            }
-           catch(NumberFormatException ex){
-                 JOptionPane.showMessageDialog(rootPane, "Fill id");
-            }
+    private void userTable() {
+        user.getutableValue(jTable2, "");
+        model = (DefaultTableModel) jTable2.getModel();
+        jTable2.setRowHeight(30);
+        jTable2.setShowGrid(true);
+        jTable2.setGridColor(Color.BLACK);
+        jTable2.setBackground(Color.WHITE);
+        jTable2.setSelectionBackground(Color.LIGHT_GRAY);
+    }
+
+    private void setValue() {
+        jTextField1.setText(value[0]);
+        jTextField2.setText(value[1]);
+        jTextField3.setText(value[2]);
+        jPasswordField1.setText(value[3]);
+        jTextField4.setText(value[4]);
+        jTextField8.setText(value[5]);
+        jTextField5.setText(value[6]);
+        jTextField6.setText(value[7]);
+        jTextField7.setText(value[8]);
+    }
+
+    public boolean isEmpty() {
+        if (jTextField1.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Username is required", "Warning", 2);
+            return false;
+        }
+        if (jTextField2.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Email is required", "Warning", 2);
+            return false;
+        }
+        if (!jTextField3.getText().matches("^.+\\..+$")) {
+            JOptionPane.showMessageDialog(this, "Invalid Email", "Warning", 2);
+            return false;
+        }
+        if (String.valueOf(jPasswordField1.getPassword()).isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Password is required", "Warning", 2);
+        }
+        if (jTextField4.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Phone number is required", "Warning", 2);
+            return false;
+        }
+        if (jTextField4.getText().length() > 11) {
+            JOptionPane.showMessageDialog(this, "Phone number is too long", "Warning", 2);
+            return false;
+        }
+        if (jTextField4.getText().length() < 10) {
+            JOptionPane.showMessageDialog(this, "Phone number is short", "Warning", 2);
+            return false;
+        }
+        if (jTextField5.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Secuirity answer is required", "Warning", 2);
+            return false;
+        }
+        if (jTextField6.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Address Line 1 is required", "Warning", 2);
+            return false;
+        }
+        if (jTextField7.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Address Line 2 is required", "Warning", 2);
+            return false;
+        }
+        return true;
+    }
+
+    private void btn_udeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_udeleteActionPerformed
+        user.deleteUser(uID);
     }//GEN-LAST:event_btn_udeleteActionPerformed
 
     private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
-              DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
-        
+        model = (DefaultTableModel) jTable2.getModel();
         int rIndex = jTable2.getSelectedRow();
-      
-        txt_uid.setText(model.getValueAt(rIndex, 0).toString());
-        txt_username.setText(model.getValueAt(rIndex, 1).toString());
-        txt_uemail.setText(model.getValueAt(rIndex, 2).toString());
-        txt_upassword.setText(model.getValueAt(rIndex, 3).toString());
-        txt_uphone.setText(model.getValueAt(rIndex, 4).toString());
-        txt_usecurity.setText(model.getValueAt(rIndex, 5).toString());
-        txt_uanswer.setText(model.getValueAt(rIndex, 6).toString());
-        txt_uaddress1.setText(model.getValueAt(rIndex, 7).toString());
-        tex_uaddress2.setText(model.getValueAt(rIndex, 8).toString());
-       
+        jTextField1.setText(model.getValueAt(rIndex, 0).toString());
+        jTextField2.setText(model.getValueAt(rIndex, 1).toString());
+        jTextField3.setText(model.getValueAt(rIndex, 2).toString());
+        jPasswordField1.setText(model.getValueAt(rIndex, 3).toString());
+        jTextField4.setText(model.getValueAt(rIndex, 4).toString());
+        jTextField8.setText(model.getValueAt(rIndex, 5).toString());
+        jTextField5.setText(model.getValueAt(rIndex, 6).toString());
+        jTextField6.setText(model.getValueAt(rIndex, 7).toString());
+        jTextField7.setText(model.getValueAt(rIndex, 8).toString());
+
     }//GEN-LAST:event_jTable2MouseClicked
 
     private void btn_updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_updateActionPerformed
-       
-        
-        int id = 0;
-        String username = txt_username.getText();
-        String email = txt_uemail.getText();
-        String password = txt_upassword.getText();
-        String phone = txt_uphone.getText();
-        String security= txt_usecurity.getText();
-        String answer = txt_uanswer.getText();
-        String address1 = txt_uaddress1.getText();
-        String address2 = tex_uaddress2.getText();
-       
-        
-        if(username.trim().equals("") || email.trim().equals("") || password.trim().equals("") ||phone.trim().equals("") ||security.trim().equals("") ||answer.trim().equals("") || address1.trim().equals("") ||address2.trim().equals("") ){
-          
-          JOptionPane.showMessageDialog(rootPane, "Fill All Data");
-      }
-      else{
-         
-            try{
-                   id = Integer.valueOf(txt_uid.getText());
-                  
-                  if(client.update_user(id, username, email,password,phone,security,answer,address1,address2)){
-            JOptionPane.showMessageDialog(rootPane, "Categor Update Successfully");
-        }
-        else{
-            JOptionPane.showMessageDialog(rootPane, "Try agan");
-        }
+        if (isEmpty()) {
+            if (!check()) {
+                int id = Integer.parseInt(jTextField1.getText());
+                String username = jTextField2.getText();
+                String email = jTextField3.getText();
+                String password = String.valueOf(jPasswordField1.getPassword());
+                String phone = jTextField4.getText();
+                String seq = jTextField8.getText();
+                String ans = jTextField5.getText();
+                String address1 = jTextField6.getText();
+                String address2 = jTextField7.getText();
+                user.update(id, username, email, password, phone, seq, ans, address1, address2);
+                jTable2.setModel(new DefaultTableModel(null, new Object[]{"User ID", "Username", "Email",
+                    "Password", "Phone", "Secuirity Question", "Answer", "Adress Line 1", "Adress Line 2"}));
+                user.getutableValue(jTable2, "");
+                clear();
             }
-           catch(NumberFormatException ex){
-                 JOptionPane.showMessageDialog(rootPane, "Fill id");
-            }
-        
-      }
+        }
     }//GEN-LAST:event_btn_updateActionPerformed
 
+    private boolean check() {
+        int rIndex = jTable2.getSelectedRow();
+        String newEmail = jTextField3.getText();
+        String newPhone = jTextField4.getText();
+        String oldemail = model.getValueAt(rIndex, 2).toString();
+        String oldphone = model.getValueAt(rIndex, 4).toString();
+        if (newEmail.equals(oldemail) && newPhone.equals(oldphone)) {
+            return false;
+        } else {
+            if (!newEmail.equals(oldemail)) {
+                boolean x = user.isEmailExist(newEmail);
+                if (x) {
+                    JOptionPane.showMessageDialog(this, "This email already exists", "warning", 2);
+                }
+                return x;
+            }
+            if (!newPhone.equals(oldphone)) {
+                boolean x = user.isPhonelExist(newPhone);
+                if (x) {
+                    JOptionPane.showMessageDialog(this, "This phone number already exists", "warning", 2);
+                }
+                return x;
+            }
+        }
+        return false;
+    }
+
+    private void clear() {
+        jTextField1.setText(String.valueOf(user.getMaxRow()));
+        jTextField2.setText("");
+        jTextField3.setText("");
+        jPasswordField1.setText("");
+        jTextField4.setText("");
+        jTextField8.setText("");
+        jTextField5.setText("");
+        jTextField6.setText("");
+        jTextField7.setText("");
+    }
+    
     private void btn_clearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_clearActionPerformed
-        txt_uid.setText("");
-       txt_username.setText("");
-       txt_uemail.setText("");
-       txt_upassword.setText("");
-       txt_uphone.setText("");
-       txt_usecurity.setText("");
-       txt_uanswer.setText("");
-       txt_uaddress1.setText("");
-       tex_uaddress2.setText("");
-      
-       
+        clear();
     }//GEN-LAST:event_btn_clearActionPerformed
 
     private void jLabel14MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel14MouseClicked
         setVisible(false);
-        AdminDashboard.jPanel9.setBackground(primaryColor);
-        AdminDashboard.jPanel10.setBackground(primaryColor);
-        AdminDashboard.jLabel9.setForeground(textPrimaryColor);
-        AdminDashboard.jLabel10.setVisible(true);
-        AdminDashboard.jLabel19.setVisible(false);
+        AdminDashboard.jPanel11.setBackground(primaryColor);
+        AdminDashboard.jPanel12.setBackground(primaryColor);
+        AdminDashboard.jLabel11.setForeground(textPrimaryColor);
+        AdminDashboard.jLabel12.setVisible(true);
+        AdminDashboard.jLabel20.setVisible(false);
     }//GEN-LAST:event_jLabel14MouseClicked
 
     private void jLabel18MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel18MouseClicked
         jPasswordField1.setEchoChar((char) 0);
-        jLabel12.setVisible(false);
-        jLabel13.setVisible(true);
+        jLabel18.setVisible(false);
+        jLabel19.setVisible(true);
     }//GEN-LAST:event_jLabel18MouseClicked
 
     private void jLabel19MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel19MouseClicked
         jPasswordField1.setEchoChar('*');
-        jLabel12.setVisible(true);
-        jLabel13.setVisible(false);
+        jLabel18.setVisible(true);
+        jLabel19.setVisible(false);
     }//GEN-LAST:event_jLabel19MouseClicked
+
+    private void jPanel3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel3MousePressed
+        xx = evt.getX();
+        xy = evt.getY();
+    }//GEN-LAST:event_jPanel3MousePressed
+
+    private void jPanel3MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel3MouseDragged
+        int x = evt.getXOnScreen();
+        int y = evt.getYOnScreen();
+        this.setLocation(x - xx, y - xy);
+    }//GEN-LAST:event_jPanel3MouseDragged
+
+    private void jTextField4KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField4KeyTyped
+        if(!Character.isDigit(evt.getKeyChar())){
+            evt.consume();
+        }
+    }//GEN-LAST:event_jTextField4KeyTyped
+
+    private void jTextField2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField2KeyTyped
+        char input = evt.getKeyChar();
+        if(!(input < '0' || input > '9') && input != '\b'){
+            evt.consume();
+            JOptionPane.showMessageDialog(this, "Username doesn't contain numbers!","Warning",2);
+        }
+    }//GEN-LAST:event_jTextField2KeyTyped
 
     /**
      * @param args the command line arguments
@@ -438,7 +566,11 @@ public class ManageUser extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ManageUser().setVisible(true);
+                try {
+                    new ManageUser().setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(ManageUser.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
@@ -464,14 +596,16 @@ public class ManageUser extends javax.swing.JFrame {
     private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable2;
-    private javax.swing.JTextField tex_uaddress2;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField jTextField5;
+    private javax.swing.JTextField jTextField6;
+    private javax.swing.JTextField jTextField7;
+    private javax.swing.JTextField jTextField8;
     private javax.swing.JTextField txt_search;
-    private javax.swing.JTextField txt_uaddress1;
-    private javax.swing.JTextField txt_uanswer;
-    private javax.swing.JTextField txt_uemail;
-    private javax.swing.JTextField txt_uid;
-    private javax.swing.JTextField txt_uphone;
-    private javax.swing.JTextField txt_usecurity;
-    private javax.swing.JTextField txt_username;
     // End of variables declaration//GEN-END:variables
+
+    
 }

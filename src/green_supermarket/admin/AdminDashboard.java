@@ -686,7 +686,11 @@ public class AdminDashboard extends javax.swing.JFrame {
         jLabel10.setVisible(false);
         jLabel19.setVisible(true);
         ManageProduct manageProduct = null;
-        manageProduct = new ManageProduct();
+        try {
+            manageProduct = new ManageProduct();
+        } catch (SQLException ex) {
+            Logger.getLogger(AdminDashboard.class.getName()).log(Level.SEVERE, null, ex);
+        }
         manageProduct.setVisible(true);
         manageProduct.pack();
     }//GEN-LAST:event_jLabel9MouseClicked
@@ -698,7 +702,11 @@ public class AdminDashboard extends javax.swing.JFrame {
         jLabel12.setVisible(false);
         jLabel20.setVisible(true);
         ManageUser manageUser = null;
-        manageUser = new ManageUser();
+        try {
+            manageUser = new ManageUser();
+        } catch (SQLException ex) {
+            Logger.getLogger(AdminDashboard.class.getName()).log(Level.SEVERE, null, ex);
+        }
         manageUser.setVisible(true);
         manageUser.pack();
     }//GEN-LAST:event_jLabel11MouseClicked
@@ -710,7 +718,11 @@ public class AdminDashboard extends javax.swing.JFrame {
         jLabel16.setVisible(false);
         jLabel21.setVisible(true);
         ManageSuppliers manageSuppliers = null;
-        manageSuppliers = new ManageSuppliers();
+        try {
+            manageSuppliers = new ManageSuppliers();
+        } catch (SQLException ex) {
+            Logger.getLogger(AdminDashboard.class.getName()).log(Level.SEVERE, null, ex);
+        }
         manageSuppliers.setVisible(true);
         manageSuppliers.pack();
     }//GEN-LAST:event_jLabel15MouseClicked
@@ -721,10 +733,10 @@ public class AdminDashboard extends javax.swing.JFrame {
         jLabel17.setForeground(textSelectionColor);
         jLabel22.setVisible(false);
         jLabel23.setVisible(true);
-        ManageSuppliers manageSuppliers = null;
-        manageSuppliers = new ManageSuppliers();
-        manageSuppliers.setVisible(true);
-        manageSuppliers.pack();
+        Transaction transaction = null;
+        transaction = new Transaction();
+        transaction.setVisible(true);
+        transaction.pack();
     }//GEN-LAST:event_jLabel17MouseClicked
 
     private void jLabel24MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel24MouseClicked
@@ -733,10 +745,14 @@ public class AdminDashboard extends javax.swing.JFrame {
         jLabel24.setForeground(textSelectionColor);
         jLabel25.setVisible(false);
         jLabel26.setVisible(true);
-        Transaction transaction = null;
-        transaction = new Transaction();
-        transaction.setVisible(true);
-        transaction.pack();
+        AddSuppliers AddSuppliers = null;
+        try {
+            AddSuppliers = new AddSuppliers();
+        } catch (SQLException ex) {
+            Logger.getLogger(AdminDashboard.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        AddSuppliers.setVisible(true);
+        AddSuppliers.pack();
     }//GEN-LAST:event_jLabel24MouseClicked
 
     private void jPanel18MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel18MouseClicked

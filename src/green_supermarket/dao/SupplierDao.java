@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package green_supermarket.supplier;
+package green_supermarket.dao;
 
 import connection.MyConnection;
 import java.sql.Connection;
@@ -13,6 +13,8 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 
 public class SupplierDao {
@@ -92,7 +94,7 @@ public class SupplierDao {
     
     //update supplier data
     public void update(int sid, String sname, String semail, String spassword, String sphone, String saddress1, String saddress2){
-        String sql = "update user set sname = ?, semail =?, spassword = ?, sphone =?, saddress1 = ?, saddress2 = ? where sid = ?";
+        String sql = "update supplier set sname = ?, semail =?, spassword = ?, sphone =?, saddress1 = ?, saddress2 = ? where sid = ?";
         try {        
             ps = con.prepareStatement(sql);
             ps.setString(1,sname);
@@ -155,8 +157,6 @@ public class SupplierDao {
                 value[4] = rs.getString(5);
                 value[5] = rs.getString(6);
                 value[6] = rs.getString(7);
-                value[7] = rs.getString(8);
-                value[8] = rs.getString(9);
             }
         } catch (SQLException ex) {
             Logger.getLogger(SupplierDao.class.getName()).log(Level.SEVERE, null, ex);
@@ -164,19 +164,43 @@ public class SupplierDao {
         return value;
     }
     
-    //get supplier id
-    public int getSupplierId(String email) {
-        int id = 0;
+    public void getstableValue(JTable table,String search) {
+        String sql = "select * from supplier where concat(sid, sname, semail) like ? order by sid desc";
         try {
-            ps = con.prepareStatement("select sid from user where semail = ?");
-            ps.setString(1, email);
+            ps = con.prepareStatement(sql);
+            ps.setString(1, "%"+search+"%");
             rs = ps.executeQuery();
-            if (rs.next()) {
-                id = rs.getInt(1);
+            DefaultTableModel model = (DefaultTableModel) table.getModel();
+            Object [] row;
+            while (rs.next()) {
+                row = new Object[7];
+                row[0] = rs.getString(1);
+                row[1] = rs.getString(2);
+                row[2] = rs.getString(3);
+                row[3] = rs.getString(4);
+                row[4] = rs.getString(5);
+                row[5] = rs.getString(6);
+                row[6] = rs.getString(7);
+                model.addRow(row);
             }
         } catch (SQLException ex) {
             Logger.getLogger(SupplierDao.class.getName()).log(Level.SEVERE, null, ex);
         }
-            return id;
+    }
+    
+    //get supplier id
+    public int getSupplierId(String semail) {
+        int sid = 0;
+        try {
+            ps = con.prepareStatement("select sid from supplier where semail = ?");
+            ps.setString(1, semail);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                sid = rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SupplierDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            return sid;
     }
 }

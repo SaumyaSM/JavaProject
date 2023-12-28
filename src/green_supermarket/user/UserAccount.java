@@ -347,7 +347,7 @@ public class UserAccount extends javax.swing.JFrame {
        }
     }//GEN-LAST:event_btnUpdateActionPerformed
 
-    private boolean check(){
+    private boolean check(){        
         String newEmail = jTextField3.getText();
         String newPhone = jTextField4.getText();
         if(newEmail.equals(value[2]) && newPhone.equals(value[4])){
