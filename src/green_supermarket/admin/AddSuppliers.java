@@ -4,6 +4,7 @@
  */
 package green_supermarket.admin;
 
+import green_supermarket.dao.Statistics;
 import green_supermarket.dao.SupplierDao;
 import green_supermarket.user.Login;
 import green_supermarket.user.UserSignUp;
@@ -20,6 +21,7 @@ import javax.swing.JOptionPane;
 public class AddSuppliers extends javax.swing.JFrame {
 
     SupplierDao supplier;
+    Statistics statistics;
     int xx, xy;
     Color notEdit = new Color(204, 204, 204);
     Color textPrimaryColor = new Color(30, 30, 30);
@@ -332,7 +334,7 @@ public class AddSuppliers extends javax.swing.JFrame {
             String spassword = String.valueOf(jPasswordField1.getPassword());
             String sphone = txt_phone.getText();
             String saddress1 = txt_address1.getText();
-            String saddress2 = txt_address1.getText();
+            String saddress2 = txt_address2.getText();
             if (!supplier.isEmailExist(semail)) {
                 if (!supplier.isPhonelExist(sphone)) {
                     supplier.insert(sid, sname, semail, spassword, sphone, saddress1, saddress2);
@@ -369,7 +371,7 @@ public class AddSuppliers extends javax.swing.JFrame {
         txt_phone.setText("");
         txt_address1.setText("");
         txt_address2.setText("");
-
+        statistics.admin();
     }//GEN-LAST:event_btn_clearActionPerformed
 
     private void jPasswordField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordField1ActionPerformed

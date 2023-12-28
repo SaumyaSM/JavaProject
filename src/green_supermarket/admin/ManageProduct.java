@@ -5,6 +5,8 @@
 package green_supermarket.admin;
 
 import green_supermarket.dao.ProductDao;
+import green_supermarket.dao.Statistics;
+import green_supermarket.user.UserDashboard;
 import java.awt.Color;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -20,18 +22,20 @@ import javax.swing.table.DefaultTableModel;
 public class ManageProduct extends javax.swing.JFrame {
 
     ProductDao productDao;
+    Statistics statistics;
     Color notEdit = new Color(204, 204, 204);
     Color textPrimaryColor = new Color(30, 30, 30);
     Color primaryColor = new Color(255, 255, 255);
     DefaultTableModel model;
     int xx, xy;
     private int pid;
-    String[] value = new String[5];
+    String[] categories;
 
     /**
      * Creates new form Manage_product
      */
     public ManageProduct() throws SQLException {
+        this.statistics = new Statistics();
         this.productDao = new ProductDao();
         initComponents();
         init();
@@ -41,8 +45,17 @@ public class ManageProduct extends javax.swing.JFrame {
         productTable();
         txt_pid1.setBackground(notEdit);
         txt_pid1.setText(String.valueOf(productDao.getMaxRow()));
+        categories = new String[productDao.countCategories()];
+        setCat();
     }
 
+    private void setCat(){
+        categories = productDao.getCat();
+        for(String s: categories){
+            jComboBox1.addItem(s);
+        }
+    }
+    
     private void productTable() {
         productDao.getProductsValue(jTable3, "");
         model = (DefaultTableModel) jTable3.getModel();
@@ -106,6 +119,11 @@ public class ManageProduct extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel3.setBackground(new java.awt.Color(0, 204, 102));
@@ -141,6 +159,11 @@ public class ManageProduct extends javax.swing.JFrame {
         jTextField4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField4ActionPerformed(evt);
+            }
+        });
+        jTextField4.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField4KeyReleased(evt);
             }
         });
         jPanel3.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 60, 260, 30));
@@ -208,7 +231,7 @@ public class ManageProduct extends javax.swing.JFrame {
         btn_add.setBackground(new java.awt.Color(0, 102, 102));
         btn_add.setFont(new java.awt.Font("Helvetica Neue", 0, 15)); // NOI18N
         btn_add.setForeground(new java.awt.Color(255, 255, 255));
-        btn_add.setText("Save");
+        btn_add.setText("Add");
         btn_add.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_addActionPerformed(evt);
@@ -238,7 +261,6 @@ public class ManageProduct extends javax.swing.JFrame {
         });
         jPanel3.add(btn_delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 500, 90, -1));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jPanel3.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 250, 210, 30));
 
         jLabel11.setBackground(new java.awt.Color(0, 153, 102));
@@ -259,11 +281,6 @@ public class ManageProduct extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btn_refreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_refreshActionPerformed
-        model.setRowCount(0);
-        productTable();
-    }//GEN-LAST:event_btn_refreshActionPerformed
 
     private void jTable3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable3MouseClicked
 
@@ -305,6 +322,9 @@ public class ManageProduct extends javax.swing.JFrame {
             if (!productDao.isIDExist(pid)) {
                 if (!productDao.isProCatExist(pro, cat)) {
                     productDao.insert(pid, pro, cat, pqty, pprice);
+                    jTable3.setModel(new DefaultTableModel(null,new Object[]{"Product ID","Product Name","Category Name","Quantity","Price"}));
+                    productDao.getProductsValue(jTable3, "");
+                    clear();
                 } else {
                     JOptionPane.showMessageDialog(this, "This product id already exists", "Warning", 2);
                 }
@@ -314,13 +334,18 @@ public class ManageProduct extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btn_addActionPerformed
 
-
-    private void btn_clearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_clearActionPerformed
+    private void clear(){
         txt_pid1.setText(String.valueOf(productDao.getMaxRow()));
         txt_pname.setText("");
         jComboBox1.setSelectedItem(-1);
         txt_quantity.setText("");
         txt_price.setText("");
+        statistics.admin();
+    }
+
+            
+    private void btn_clearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_clearActionPerformed
+        clear();
     }//GEN-LAST:event_btn_clearActionPerformed
 
     private void btn_deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_deleteActionPerformed
@@ -346,6 +371,29 @@ public class ManageProduct extends javax.swing.JFrame {
         int y = evt.getYOnScreen();
         this.setLocation(x - xx, y - xy);
     }//GEN-LAST:event_jPanel3MouseDragged
+
+    private void btn_refreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_refreshActionPerformed
+        model.setRowCount(0);
+        productTable();
+    }//GEN-LAST:event_btn_refreshActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        for (double i = 0.1; i <= 1.0; i += 0.1) {
+            String s = "" + i;
+            float f = Float.parseFloat(s);
+            this.setOpacity(f);
+            try {
+                Thread.sleep(40);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(UserDashboard.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_formWindowOpened
+
+    private void jTextField4KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField4KeyReleased
+        jTable3.setModel(new DefaultTableModel(null, new Object[]{"Product ID","Product Name","Category Name","Quantity","Price"}));
+        productDao.getProductsValue(jTable3, "");
+    }//GEN-LAST:event_jTextField4KeyReleased
 
     /**
      * @param args the command line arguments

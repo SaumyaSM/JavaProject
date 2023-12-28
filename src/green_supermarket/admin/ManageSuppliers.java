@@ -4,7 +4,9 @@
  */
 package green_supermarket.admin;
 
+import green_supermarket.dao.Statistics;
 import green_supermarket.dao.SupplierDao;
+import green_supermarket.user.UserDashboard;
 import java.awt.Color;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -22,6 +24,7 @@ public class ManageSuppliers extends javax.swing.JFrame {
      * Creates new form Mange_suppliers
      */
     SupplierDao supplier;
+    Statistics statistics;
     Color textPrimaryColor = new Color(30, 30, 30);
     Color primaryColor = new Color(255, 255, 255);
     int xx, xy;
@@ -30,6 +33,7 @@ public class ManageSuppliers extends javax.swing.JFrame {
     String[] value = new String[9];
 
     public ManageSuppliers() throws SQLException {
+        this.statistics = new Statistics();
         this.supplier = new SupplierDao();
         initComponents();
         init();
@@ -73,6 +77,11 @@ public class ManageSuppliers extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel3.setBackground(new java.awt.Color(0, 204, 102));
@@ -160,6 +169,12 @@ public class ManageSuppliers extends javax.swing.JFrame {
             }
         });
 
+        txt_search.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txt_searchKeyReleased(evt);
+            }
+        });
+
         jLabel17.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(255, 255, 255));
         jLabel17.setText("Search");
@@ -223,7 +238,6 @@ public class ManageSuppliers extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(16, 16, 16)
                         .addComponent(jLabel17)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txt_search, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -452,6 +466,7 @@ public class ManageSuppliers extends javax.swing.JFrame {
         txt_sphone.setText("");
         txt_saddress1.setText("");
         tex_saddress2.setText("");
+        statistics.admin();
     }
     
     private void jLabel13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MouseClicked
@@ -465,14 +480,14 @@ public class ManageSuppliers extends javax.swing.JFrame {
 
     private void jLabel14MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel14MouseClicked
         jPasswordField1.setEchoChar((char) 0);
-        jLabel12.setVisible(false);
-        jLabel13.setVisible(true);
+        jLabel14.setVisible(false);
+        jLabel18.setVisible(true);
     }//GEN-LAST:event_jLabel14MouseClicked
 
     private void jLabel18MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel18MouseClicked
         jPasswordField1.setEchoChar('*');
-        jLabel12.setVisible(true);
-        jLabel13.setVisible(false);
+        jLabel14.setVisible(true);
+        jLabel18.setVisible(false);
     }//GEN-LAST:event_jLabel18MouseClicked
 
     private void btn_refreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_refreshActionPerformed
@@ -490,6 +505,25 @@ public class ManageSuppliers extends javax.swing.JFrame {
         int y = evt.getYOnScreen();
         this.setLocation(x - xx, y - xy);
     }//GEN-LAST:event_jPanel3MouseDragged
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        for (double i = 0.1; i <= 1.0; i += 0.1) {
+            String s = "" + i;
+            float f = Float.parseFloat(s);
+            this.setOpacity(f);
+            try {
+                Thread.sleep(40);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(UserDashboard.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        jLabel18.setVisible(false);
+    }//GEN-LAST:event_formWindowOpened
+
+    private void txt_searchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_searchKeyReleased
+        jTable2.setModel(new DefaultTableModel(null, new Object[]{"Supplier ID","Supplier Name","Supplier email","Supplier password","Supplier phone","Supplier address1","Supplier address2"}));
+        supplier.getstableValue(jTable2, "");
+    }//GEN-LAST:event_txt_searchKeyReleased
 
     /**
      * @param args the command line arguments

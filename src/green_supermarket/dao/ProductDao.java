@@ -48,7 +48,7 @@ public class ProductDao {
     int total = 0;
     try {
         st = con.createStatement ();
-        rs = st.executeQuery ("select count (*) as 'total' from category");
+        rs = st.executeQuery ("select count(*) as 'total' from category");
         if(rs.next ()){
             total = rs.getInt (1) ;
         }

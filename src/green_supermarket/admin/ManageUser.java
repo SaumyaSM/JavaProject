@@ -4,7 +4,9 @@
  */
 package green_supermarket.admin;
 
+import green_supermarket.dao.Statistics;
 import green_supermarket.dao.UserDao;
+import green_supermarket.user.UserDashboard;
 import java.awt.Color;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -19,6 +21,7 @@ import javax.swing.table.DefaultTableModel;
 public class ManageUser extends javax.swing.JFrame {
 
     UserDao user;
+    Statistics statistics;
     Color textPrimaryColor = new Color(30, 30, 30);
     Color primaryColor = new Color(255, 255, 255);
     int xx, xy;
@@ -27,6 +30,7 @@ public class ManageUser extends javax.swing.JFrame {
     String[] value = new String[9];
 
     public ManageUser() throws SQLException {
+        this.statistics = new Statistics();
         this.user = new UserDao();
         initComponents();
         init();
@@ -68,6 +72,11 @@ public class ManageUser extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jPanel3.setBackground(new java.awt.Color(0, 204, 102));
         jPanel3.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
@@ -173,6 +182,12 @@ public class ManageUser extends javax.swing.JFrame {
         btn_clear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_clearActionPerformed(evt);
+            }
+        });
+
+        txt_search.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txt_searchKeyReleased(evt);
             }
         });
 
@@ -483,8 +498,9 @@ public class ManageUser extends javax.swing.JFrame {
         jTextField5.setText("");
         jTextField6.setText("");
         jTextField7.setText("");
+        statistics.admin();
     }
-    
+
     private void btn_clearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_clearActionPerformed
         clear();
     }//GEN-LAST:event_btn_clearActionPerformed
@@ -522,18 +538,37 @@ public class ManageUser extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanel3MouseDragged
 
     private void jTextField4KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField4KeyTyped
-        if(!Character.isDigit(evt.getKeyChar())){
+        if (!Character.isDigit(evt.getKeyChar())) {
             evt.consume();
         }
     }//GEN-LAST:event_jTextField4KeyTyped
 
     private void jTextField2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField2KeyTyped
         char input = evt.getKeyChar();
-        if(!(input < '0' || input > '9') && input != '\b'){
+        if (!(input < '0' || input > '9') && input != '\b') {
             evt.consume();
-            JOptionPane.showMessageDialog(this, "Username doesn't contain numbers!","Warning",2);
+            JOptionPane.showMessageDialog(this, "Username doesn't contain numbers!", "Warning", 2);
         }
     }//GEN-LAST:event_jTextField2KeyTyped
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        for (double i = 0.1; i <= 1.0; i += 0.1) {
+            String s = "" + i;
+            float f = Float.parseFloat(s);
+            this.setOpacity(f);
+            try {
+                Thread.sleep(40);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(UserDashboard.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        jLabel19.setVisible(false);
+    }//GEN-LAST:event_formWindowOpened
+
+    private void txt_searchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_searchKeyReleased
+        jTable2.setModel(new DefaultTableModel(null, new Object[]{"User ID", "User Name", "User email", "User password", "User phone","User secqus", "User ans", "User address1", "User address2"}));
+        user.getutableValue(jTable2, "");
+    }//GEN-LAST:event_txt_searchKeyReleased
 
     /**
      * @param args the command line arguments
@@ -607,5 +642,4 @@ public class ManageUser extends javax.swing.JFrame {
     private javax.swing.JTextField txt_search;
     // End of variables declaration//GEN-END:variables
 
-    
 }

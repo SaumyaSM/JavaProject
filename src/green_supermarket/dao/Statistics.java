@@ -5,6 +5,7 @@
 package green_supermarket.dao;
 
 import connection.MyConnection;
+import green_supermarket.admin.AdminDashboard;
 import green_supermarket.user.UserDashboard;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,7 +17,6 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JLabel;
 
 public class Statistics {
 
@@ -24,7 +24,7 @@ public class Statistics {
     PreparedStatement ps;
     Statement st;
     ResultSet rs;
-    
+
     public Statistics() throws SQLException {
         this.con = MyConnection.getConnection();
     }
@@ -64,7 +64,7 @@ public class Statistics {
         double total = 0.0;
         try {
             st = con.createStatement();
-            rs = st.executeQuery("select sum(total) as 'total' from purchase where p_date = "+today+"");
+            rs = st.executeQuery("select sum(total) as 'total' from purchase where p_date = '"+today+"'");
             if (rs.next()) {
                 total = rs.getDouble(1);
             }
@@ -73,12 +73,12 @@ public class Statistics {
         }
         return total;
     }
-    
+
     public double totalPurchase(int id) {
         double total = 0.0;
         try {
             st = con.createStatement();
-            rs = st.executeQuery("select sum(total) as 'total' from purchase where uid = "+id+"");
+            rs = st.executeQuery("select sum(total) as 'total' from purchase where uid = " + id + "");
             if (rs.next()) {
                 total = rs.getDouble(1);
             }
@@ -89,10 +89,17 @@ public class Statistics {
     }
 
     //admin dashhboard
-//    video 27 time-9.43 tp 13.54
-    
+    public void admin() {
+        AdminDashboard.jCat.setText(String.valueOf(total("category")));
+        AdminDashboard.jPro.setText(String.valueOf(total("product")));
+        AdminDashboard.jUser.setText(String.valueOf(total("user")));
+        AdminDashboard.jSupp.setText(String.valueOf(total("supplier")));
+        AdminDashboard.jToday.setText(String.valueOf(todaySales()));
+        AdminDashboard.jTotal.setText(String.valueOf(totalSales()));
+    }
+
     //user
-    public void user(int id){
+    public void user(int id) {
         UserDashboard.jCat.setText(String.valueOf(total("category")));
         UserDashboard.jPro.setText(String.valueOf(total("product")));
         UserDashboard.jPur.setText(String.valueOf(totalPurchase(id)));

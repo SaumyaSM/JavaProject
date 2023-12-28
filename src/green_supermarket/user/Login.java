@@ -192,7 +192,7 @@ public class Login extends javax.swing.JFrame {
         jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(175, 91, -1, -1));
 
         email.setBackground(new java.awt.Color(255, 255, 255));
-        email.setText("saumyarsm@gmail.com");
+        email.setText("admin@gmail.com");
         email.setOpaque(true);
         email.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -202,8 +202,13 @@ public class Login extends javax.swing.JFrame {
         jPanel2.add(email, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 220, 275, 30));
 
         password.setBackground(new java.awt.Color(255, 255, 255));
-        password.setText("Saumya890");
+        password.setText("Admin123");
         password.setOpaque(true);
+        password.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                passwordActionPerformed(evt);
+            }
+        });
         jPanel2.add(password, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 290, 275, 30));
 
         jLabel8.setBackground(new java.awt.Color(51, 204, 0));
@@ -445,6 +450,7 @@ public class Login extends javax.swing.JFrame {
                         AdminDashboard ad = new AdminDashboard();
                         ad.setVisible(true);
                         ad.pack();
+                        statistics.admin();
                         this.dispose();
                     } else {
                         JOptionPane.showMessageDialog(this, "Incorrect email or password", "Login Failed", 2);
@@ -539,6 +545,10 @@ public class Login extends javax.swing.JFrame {
         jLabel13.setVisible(false);
         jLabel14.setVisible(false);
     }//GEN-LAST:event_jRadioButton2MouseClicked
+
+    private void passwordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_passwordActionPerformed
 
     /**
      * @param args the command line arguments

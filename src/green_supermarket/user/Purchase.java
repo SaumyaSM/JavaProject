@@ -29,7 +29,7 @@ public class Purchase extends javax.swing.JFrame {
 
     PurchaseDao purchaseDao;
     UserDao user = new UserDao();
-    Statistics statistics = new Statistics();
+    Statistics statistics;
     ProductDao productDao = new ProductDao();
     Color textPrimaryColor = new Color(30, 30, 30);
     Color primaryColor = new Color(255, 255, 255);
@@ -44,6 +44,7 @@ public class Purchase extends javax.swing.JFrame {
     private int pID;
 
     public Purchase() throws SQLException {
+        this.statistics = new Statistics();
         this.purchaseDao = new PurchaseDao();
         initComponents();
         init();
@@ -370,6 +371,7 @@ public class Purchase extends javax.swing.JFrame {
         jTable1.clearSelection();
         price = 0.0;
         qty = 0;
+        statistics.admin();
     }
 
     private void jLabel11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel11MouseClicked
@@ -481,7 +483,6 @@ public class Purchase extends javax.swing.JFrame {
             }
             statistics.user(user.getUserId(email));
             JOptionPane.showMessageDialog(this, "Successfully purchased");
-            setDefault(); 
         }else{
             JOptionPane.showMessageDialog(this, "You haven't purchased any products", "Warning", 2);
         }
