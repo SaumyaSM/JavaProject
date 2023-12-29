@@ -1,7 +1,8 @@
-
 package green_supermarket.supplier;
+
 import green_supermarket.user.Login;
 import java.awt.Color;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -15,6 +16,11 @@ public class SupplierDashboard extends javax.swing.JFrame {
     /**
      * Creates new form SupplierDashboard
      */
+    Color selectionColor = new Color(0, 0, 0);
+    Color sideColor = new Color(51, 204, 0);
+    Color textSelectionColor = new Color(221, 221, 221);
+    int xx, xy;
+
     public SupplierDashboard() {
         initComponents();
         init();
@@ -32,7 +38,7 @@ public class SupplierDashboard extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        UserEmail = new javax.swing.JLabel();
+        SupplierEmail = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
@@ -57,10 +63,15 @@ public class SupplierDashboard extends javax.swing.JFrame {
         jPanel13 = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
+        jDel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -81,10 +92,10 @@ public class SupplierDashboard extends javax.swing.JFrame {
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/green_supermarket/ic/shopping.png"))); // NOI18N
         jLabel2.setText("ONLINE SHOPPING");
 
-        UserEmail.setFont(new java.awt.Font("Helvetica Neue", 0, 17)); // NOI18N
-        UserEmail.setForeground(new java.awt.Color(255, 255, 255));
-        UserEmail.setIcon(new javax.swing.ImageIcon(getClass().getResource("/green_supermarket/ic/user.png"))); // NOI18N
-        UserEmail.setText("supplier@gmail.com");
+        SupplierEmail.setFont(new java.awt.Font("Helvetica Neue", 0, 17)); // NOI18N
+        SupplierEmail.setForeground(new java.awt.Color(255, 255, 255));
+        SupplierEmail.setIcon(new javax.swing.ImageIcon(getClass().getResource("/green_supermarket/ic/user.png"))); // NOI18N
+        SupplierEmail.setText("supplier@gmail.com");
 
         jLabel1.setFont(new java.awt.Font("Helvetica Neue", 1, 20)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -104,7 +115,7 @@ public class SupplierDashboard extends javax.swing.JFrame {
                 .addGap(30, 30, 30)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 767, Short.MAX_VALUE)
-                .addComponent(UserEmail)
+                .addComponent(SupplierEmail)
                 .addGap(60, 60, 60)
                 .addComponent(jLabel1)
                 .addGap(40, 40, 40))
@@ -115,7 +126,7 @@ public class SupplierDashboard extends javax.swing.JFrame {
                 .addGap(14, 14, 14)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(UserEmail)
+                    .addComponent(SupplierEmail)
                     .addComponent(jLabel1))
                 .addContainerGap(20, Short.MAX_VALUE))
         );
@@ -314,9 +325,9 @@ public class SupplierDashboard extends javax.swing.JFrame {
         jLabel5.setForeground(new java.awt.Color(102, 102, 102));
         jLabel5.setText("My Deliveries:");
 
-        jLabel15.setFont(new java.awt.Font("ITF Devanagari", 1, 17)); // NOI18N
-        jLabel15.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel15.setText("0");
+        jDel.setFont(new java.awt.Font("ITF Devanagari", 1, 17)); // NOI18N
+        jDel.setForeground(new java.awt.Color(102, 102, 102));
+        jDel.setText("0");
 
         javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
         jPanel13.setLayout(jPanel13Layout);
@@ -326,7 +337,7 @@ public class SupplierDashboard extends javax.swing.JFrame {
                 .addGap(27, 27, 27)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jDel, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(52, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel13Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -341,7 +352,7 @@ public class SupplierDashboard extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jLabel15))
+                    .addComponent(jDel))
                 .addContainerGap(63, Short.MAX_VALUE))
         );
 
@@ -376,11 +387,11 @@ public class SupplierDashboard extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void init(){
+    private void init() {
         icons();
     }
-    
-    private void icons(){
+
+    private void icons() {
         jLabel8.setVisible(true);
         jLabel18.setVisible(false);
         jLabel10.setVisible(true);
@@ -388,10 +399,10 @@ public class SupplierDashboard extends javax.swing.JFrame {
         jLabel12.setVisible(true);
         jLabel20.setVisible(false);
     }
-    
+
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
-        int a = JOptionPane.showConfirmDialog(this, "Do you want to logout now?","Logout",JOptionPane.YES_NO_OPTION);
-        if(a == 0){
+        int a = JOptionPane.showConfirmDialog(this, "Do you want to logout now?", "Logout", JOptionPane.YES_NO_OPTION);
+        if (a == 0) {
             try {
                 new Login().setVisible(true);
             } catch (java.sql.SQLException ex) {
@@ -406,7 +417,7 @@ public class SupplierDashboard extends javax.swing.JFrame {
         int y = evt.getYOnScreen();
         int xx = 0;
         int xy = 0;
-        this.setLocation(x-xx, y-xy);
+        this.setLocation(x - xx, y - xy);
     }//GEN-LAST:event_jPanel4MouseDragged
 
     private void jPanel4MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel4MousePressed
@@ -415,16 +426,17 @@ public class SupplierDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanel4MousePressed
 
     private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
-        Color selectionColor = null;
         jPanel7.setBackground(selectionColor);
-        Color sideColor = null;
         jPanel8.setBackground(sideColor);
-        Color textSelectionColor = null;
         jLabel7.setForeground(textSelectionColor);
         jLabel8.setVisible(false);
         jLabel18.setVisible(true);
         SupplierDelivery supplierDelivery = null;
-        supplierDelivery = new SupplierDelivery();
+        try {
+            supplierDelivery = new SupplierDelivery();
+        } catch (SQLException ex) {
+            Logger.getLogger(SupplierDashboard.class.getName()).log(Level.SEVERE, null, ex);
+        }
         supplierDelivery.setVisible(true);
         supplierDelivery.pack();
     }//GEN-LAST:event_jLabel7MouseClicked
@@ -434,26 +446,24 @@ public class SupplierDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanel7MouseClicked
 
     private void jLabel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseClicked
-        Color selectionColor = null;
         jPanel9.setBackground(selectionColor);
-        Color sideColor = null;
         jPanel10.setBackground(sideColor);
-        Color textSelectionColor = null;
         jLabel9.setForeground(textSelectionColor);
         jLabel10.setVisible(false);
         jLabel19.setVisible(true);
         SupplierMyDelivery supplierMyDelivery = null;
-        supplierMyDelivery = new SupplierMyDelivery();
+        try {
+            supplierMyDelivery = new SupplierMyDelivery();
+        } catch (SQLException ex) {
+            Logger.getLogger(SupplierDashboard.class.getName()).log(Level.SEVERE, null, ex);
+        }
         supplierMyDelivery.setVisible(true);
         supplierMyDelivery.pack();
     }//GEN-LAST:event_jLabel9MouseClicked
 
     private void jLabel11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel11MouseClicked
-        Color selectionColor = null;
         jPanel11.setBackground(selectionColor);
-        Color sideColor = null;
         jPanel12.setBackground(sideColor);
-        Color textSelectionColor = null;
         jLabel11.setForeground(textSelectionColor);
         jLabel12.setVisible(false);
         jLabel20.setVisible(true);
@@ -466,6 +476,19 @@ public class SupplierDashboard extends javax.swing.JFrame {
         supplierAccount.setVisible(true);
         supplierAccount.pack();
     }//GEN-LAST:event_jLabel11MouseClicked
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        for (double i = 0.1; i <= 1.0; i += 0.1) {
+            String s = "" + i;
+            float f = Float.parseFloat(s);
+            this.setOpacity(f);
+            try {
+                Thread.sleep(40);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(SupplierDashboard.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments
@@ -503,13 +526,13 @@ public class SupplierDashboard extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public static javax.swing.JLabel UserEmail;
+    public static javax.swing.JLabel SupplierEmail;
+    public static javax.swing.JLabel jDel;
     private javax.swing.JLabel jLabel1;
     public static javax.swing.JLabel jLabel10;
     public static javax.swing.JLabel jLabel11;
     public static javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel15;
     public static javax.swing.JLabel jLabel18;
     public static javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;

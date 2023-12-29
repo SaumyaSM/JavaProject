@@ -143,11 +143,11 @@ public class SupplierDao {
     }
     
     //get supplier value
-    public String[] getSupplierValue(int id) {
+    public String[] getSupplierValue(int sid) {
         String[] value = new String[9];
         try {
             ps = con.prepareStatement("select * from supplier where sid = ?");
-            ps.setInt(1, id);
+            ps.setInt(1, sid);
             rs = ps.executeQuery();
             if (rs.next()) {
                 value[0] = rs.getString(1);
@@ -202,5 +202,21 @@ public class SupplierDao {
             Logger.getLogger(SupplierDao.class.getName()).log(Level.SEVERE, null, ex);
         }
             return sid;
+    }
+    
+    //get supplier name
+    public String getSupplierName(String semail) {
+        String sname = null;
+        try {
+            ps = con.prepareStatement("select sid from supplier where semail = ?");
+            ps.setString(1, semail);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                sname = rs.getString(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SupplierDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            return sname;
     }
 }

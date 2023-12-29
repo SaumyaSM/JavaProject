@@ -59,7 +59,7 @@ public class PurchaseDao {
         return value;
     }
     
-    //insert data into user table
+    //insert data into purchase table
     public void insert(int id, int uid, String uname, String uphone, int pid, String pname, 
             int qty, double price, double total, String pDate, String address,String rDate,
             String supplier, String status){
@@ -136,6 +136,64 @@ public class PurchaseDao {
                 row[8] = rs.getString(13);
                 row[9] = rs.getString(14);
                 
+                model.addRow(row);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PurchaseDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    //get supplier delivered product's values
+    public void getSuppDeliProducts(JTable table,String search, String supplier) {
+        String sql = "select * from purchase where concat(id, pid,uname,product_name) like ? and supplier = ? and status = 'Received' order by id desc";
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setString(1, "%"+search+"%");
+            ps.setString(2, supplier);
+            rs = ps.executeQuery();
+            DefaultTableModel model = (DefaultTableModel) table.getModel();
+            Object [] row;
+            while (rs.next()) {
+                row = new Object[14];
+                row[0] = rs.getInt(1);
+                row[1] = rs.getInt(2);
+                row[2] = rs.getString(3);
+                row[3] = rs.getString(4);
+                row[4] = rs.getInt(5);
+                row[5] = rs.getString(6);
+                row[6] = rs.getInt(7);
+                row[7] = rs.getDouble(8);
+                row[8] = rs.getDouble(9);
+                row[9] = rs.getString(10);
+                row[10] = rs.getString(11);
+                row[11] = rs.getString(12);
+                row[12] = rs.getString(13);
+                row[13] = rs.getString(14);
+                model.addRow(row);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PurchaseDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void transaction(JTable table,String search) {
+        String sql = "select * from purchase where concat(id, pid,uid) like ? and status = 'Received' order by id desc";
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setString(1, "%"+search+"%");
+            rs = ps.executeQuery();
+            DefaultTableModel model = (DefaultTableModel) table.getModel();
+            Object [] row;
+            while (rs.next()) {
+                row = new Object[8];
+                row[0] = rs.getInt(1);
+                row[1] = rs.getInt(2);
+                row[2] = rs.getInt(5);
+                row[3] = rs.getInt(7);
+                row[4] = rs.getDouble(8);
+                row[5] = rs.getDouble(9);
+                row[6] = rs.getString(12);
+                row[7] = rs.getString(13);               
                 model.addRow(row);
             }
         } catch (SQLException ex) {

@@ -7,10 +7,7 @@ package green_supermarket.dao;
 import connection.MyConnection;
 import green_supermarket.user.UserDashboard;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Properties;
 import javax.mail.Message;
 import javax.mail.PasswordAuthentication;
@@ -22,19 +19,16 @@ import javax.mail.internet.MimeMessage;
 public class EmailSending {
 
     Connection con;
-    PreparedStatement ps;
-    Statement st;
-    ResultSet rs;
 
     public EmailSending() throws SQLException {
         this.con = MyConnection.getConnection();
     }
 
-    public void sendemail() {
+    public void sendemail(double total) {
         String Toemail = UserDashboard.UserEmail.getText();
         String Fromemail = "supermarketgreen4@gmail.com";
         String password = "lqnt kaex uqrb cjxc";
-        String Subject = "Your email subject";
+        String Subject = "Online Receipt";
         
         Properties properties = new Properties();
         properties.put("mail.smtp.auth", "true");
@@ -54,9 +48,9 @@ public class EmailSending {
             MimeMessage message = new MimeMessage(session);
             message.setFrom(new InternetAddress(Fromemail));
             message.addRecipient(Message.RecipientType.TO,
-                    new InternetAddress(Toemail));
+            new InternetAddress(Toemail));
             message.setSubject(Subject);
-            message.setText("bill");
+            message.setText("Dear "+Toemail+"\n"+"Thank you for your purchase made at GreenSupermarket!\nYour total is: "+total);
             Transport.send(message);
         } catch (Exception ex) {
             System.out.println("cha" + ex);

@@ -485,7 +485,7 @@ public class Purchase extends javax.swing.JFrame {
             }
             statistics.user(user.getUserId(email));
             JOptionPane.showMessageDialog(this, "Successfully purchased");
-            emailSending.sendemail();
+            emailSending.sendemail(total);
         }else{
             JOptionPane.showMessageDialog(this, "You haven't purchased any products", "Warning", 2);
         }

@@ -4,6 +4,14 @@
  */
 package green_supermarket.supplier;
 
+import green_supermarket.dao.ProductDao;
+import green_supermarket.dao.Statistics;
+import java.awt.Color;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Lenovo
@@ -13,7 +21,18 @@ public class SupplierMyDelivery extends javax.swing.JFrame {
     /**
      * Creates new form SupplierMyDelivery
      */
-    public SupplierMyDelivery() {
+    Statistics statistics;
+    Color notEdit = new Color(204, 204, 204);
+    Color textPrimaryColor = new Color(30, 30, 30);
+    Color primaryColor = new Color(255, 255, 255);
+    DefaultTableModel model;
+    int xx, xy;
+
+    /**
+     * Creates new form Manage_product
+     */
+    public SupplierMyDelivery() throws SQLException {
+        this.statistics = new Statistics();
         initComponents();
     }
 
@@ -37,6 +56,16 @@ public class SupplierMyDelivery extends javax.swing.JFrame {
         setUndecorated(true);
 
         jPanel1.setBackground(new java.awt.Color(0, 153, 102));
+        jPanel1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                jPanel1MouseDragged(evt);
+            }
+        });
+        jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jPanel1MousePressed(evt);
+            }
+        });
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -122,9 +151,30 @@ public class SupplierMyDelivery extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    
     private void jLabel11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel11MouseClicked
-        System.exit(0);
+        setDefault();
     }//GEN-LAST:event_jLabel11MouseClicked
+
+    private void jPanel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MousePressed
+        xx = evt.getX();
+        xy = evt.getY();
+    }//GEN-LAST:event_jPanel1MousePressed
+
+    private void jPanel1MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseDragged
+        int x = evt.getXOnScreen();
+        int y = evt.getYOnScreen();
+        this.setLocation(x - xx, y - xy);
+    }//GEN-LAST:event_jPanel1MouseDragged
+
+    private void setDefault() {
+        setVisible(false);
+        SupplierDashboard.jPanel9.setBackground(primaryColor);
+        SupplierDashboard.jPanel10.setBackground(primaryColor);
+        SupplierDashboard.jLabel9.setForeground(textPrimaryColor);
+        SupplierDashboard.jLabel10.setVisible(true);
+        SupplierDashboard.jLabel19.setVisible(false);
+    }
 
     /**
      * @param args the command line arguments
@@ -156,7 +206,11 @@ public class SupplierMyDelivery extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new SupplierMyDelivery().setVisible(true);
+                try {
+                    new SupplierMyDelivery().setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(SupplierMyDelivery.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }

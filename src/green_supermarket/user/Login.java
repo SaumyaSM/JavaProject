@@ -431,6 +431,7 @@ public class Login extends javax.swing.JFrame {
                         SupplierDashboard sd = new SupplierDashboard();
                         sd.setVisible(true);
                         sd.pack();
+                        statistics.supplier(rs.getString(2));
                         this.dispose();
                     } else {
                         JOptionPane.showMessageDialog(this, "Incorrect email or password", "Login Failed", 2);

@@ -719,7 +719,11 @@ public class AdminDashboard extends javax.swing.JFrame {
         jLabel22.setVisible(false);
         jLabel23.setVisible(true);
         Transaction transaction = null;
-        transaction = new Transaction();
+        try {
+            transaction = new Transaction();
+        } catch (SQLException ex) {
+            Logger.getLogger(AdminDashboard.class.getName()).log(Level.SEVERE, null, ex);
+        }
         transaction.setVisible(true);
         transaction.pack();
     }//GEN-LAST:event_jLabel17MouseClicked

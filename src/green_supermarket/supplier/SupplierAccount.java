@@ -4,6 +4,7 @@
  */
 package green_supermarket.supplier;
 
+import green_supermarket.dao.SupplierDao;
 import green_supermarket.dao.UserDao;
 import static green_supermarket.user.ForgotPassword.jTextField2;
 import java.awt.Color;
@@ -18,14 +19,15 @@ import javax.swing.JOptionPane;
  */
 public class SupplierAccount extends javax.swing.JFrame {
 
-    UserDao user;
-    Color textPrimaryColor = new Color(30,30,30);
-    Color primaryColor = new Color(255,255,255);
+    SupplierDao supplier;
+    Color textPrimaryColor = new Color(30, 30, 30);
+    Color primaryColor = new Color(255, 255, 255);
     int xx, xy;
-    private int uID;
-    String[] value = new String[9];
+    private int sID;
+    String[] value = new String[7];
+
     public SupplierAccount() throws SQLException {
-        this.user = new UserDao();
+        this.supplier = new SupplierDao();
         initComponents();
     }
 
@@ -218,45 +220,123 @@ public class SupplierAccount extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void init(){
+        setLocation(410,300);
+        sID = supplier.getSupplierId(SupplierDashboard.SupplierEmail.getText());
+        value = supplier.getSupplierValue(sID);
+        setValue();
+    }
+    
+    private void setValue(){
+        jTextField3.setText(value[0]);
+        jTextField4.setText(value[1]);
+        jTextField5.setText(value[2]);
+        jPasswordField1.setText(value[3]);
+        jTextField6.setText(value[4]);
+        jTextField8.setText(value[5]);
+        jTextField9.setText(value[6]);
+    }
+    
+    public boolean isEmpty(){
+        if(jTextField4.getText().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Supplier name is required", "Warning", 2);
+            return false;
+        }
+        if (jTextField5.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Email is required", "Warning", 2);
+            return false;
+        }
+        if (!jTextField5.getText().matches("^.+\\..+$")) {
+            JOptionPane.showMessageDialog(this, "Invalid Email", "Warning", 2);
+            return false;
+        }
+        if (String.valueOf(jPasswordField1.getPassword()).isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Password is required", "Warning", 2);
+        }
+        if(jTextField6.getText().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Phone number is required", "Warning", 2);
+            return false;
+        }
+        if(jTextField6.getText().length()>11){
+            JOptionPane.showMessageDialog(this, "Phone number is too long", "Warning", 2);
+            return false;
+        }
+        if(jTextField6.getText().length()<10){
+            JOptionPane.showMessageDialog(this, "Phone number is short", "Warning", 2);
+            return false;
+        }        
+        if(jTextField8.getText().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Address Line 1 is required", "Warning", 2);
+            return false;
+        }
+        if(jTextField9.getText().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Address Line 2 is required", "Warning", 2);
+            return false;
+        }
+        return true;
+    }
+    
     private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField3ActionPerformed
 
     private void jTextField4KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField4KeyTyped
         char input = evt.getKeyChar();
-        if(!(input < '0' || input > '9') && input != '\b'){
+        if (!(input < '0' || input > '9') && input != '\b') {
             evt.consume();
-            JOptionPane.showMessageDialog(this, "Username doesn't contain numbers!","Warning",2);
+            JOptionPane.showMessageDialog(this, "Username doesn't contain numbers!", "Warning", 2);
         }
     }//GEN-LAST:event_jTextField4KeyTyped
 
     private void jTextField6KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField6KeyTyped
-        if(!Character.isDigit(evt.getKeyChar())){
+        if (!Character.isDigit(evt.getKeyChar())) {
             evt.consume();
         }
     }//GEN-LAST:event_jTextField6KeyTyped
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
-        if(isEmpty()){
-            if(!check()){
-                int id = Integer.parseInt(jTextField3.getText());
-                String username = jTextField2.getText();
-                String email = jTextField3.getText();
-                String password = String.valueOf(jPasswordField1.getPassword());
-                String phone = jTextField4.getText();
-                String seq = jTextField8.getText();
-                String ans = jTextField5.getText();
-                String address1 = jTextField6.getText();
-                String address2 = jTextField9.getText();
-                user.update(id, username, email, password, phone, seq, ans, address1, address2);
+        if (isEmpty()) {
+            if (!check()) {
+                int sID = Integer.parseInt(jTextField3.getText());
+                String sname = jTextField4.getText();
+                String semail = jTextField5.getText();
+                String spassword = String.valueOf(jPasswordField1.getPassword());
+                String sphone = jTextField6.getText();
+                String saddress1 = jTextField8.getText();
+                String saddress2 = jTextField9.getText();
+                supplier.update(sID, sname, semail, spassword, sphone, saddress1, saddress2);
                 this.dispose();
                 setDefault();
             }
         }
     }//GEN-LAST:event_btnUpdateActionPerformed
 
+    
+    private boolean check(){        
+        String newEmail = jTextField5.getText();
+        String newPhone = jTextField6.getText();
+        if(newEmail.equals(value[2]) && newPhone.equals(value[4])){
+            return false;
+        }else{
+            if(!newEmail.equals(value[2])){
+                boolean x = supplier.isEmailExist(newEmail);
+                if(x){
+                    JOptionPane.showMessageDialog(this, "This email already exists", "warning",2);
+                }
+                return x;
+            }
+            if(!newPhone.equals(value[4])){
+                boolean x = supplier.isPhonelExist(newPhone);
+                if(x){
+                    JOptionPane.showMessageDialog(this, "This phone number already exists", "warning",2);
+                }
+                return x;
+            }
+        }
+        return false;
+    }
+    
     private void jLabel13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MouseClicked
-        setVisible(false);
         setDefault();
     }//GEN-LAST:event_jLabel13MouseClicked
 
@@ -273,7 +353,7 @@ public class SupplierAccount extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel15MouseClicked
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        user.deleteUser(uID);
+        supplier.deleteSupplier(sID);
         System.exit(0);
     }//GEN-LAST:event_btnDeleteActionPerformed
 
@@ -282,13 +362,22 @@ public class SupplierAccount extends javax.swing.JFrame {
         int y = evt.getYOnScreen();
         int xx = 0;
         int xy = 0;
-        this.setLocation(x-xx, y-xy);
+        this.setLocation(x - xx, y - xy);
     }//GEN-LAST:event_jPanel3MouseDragged
 
     private void jPanel3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel3MousePressed
         int xx = evt.getX();
         int xy = evt.getY();
     }//GEN-LAST:event_jPanel3MousePressed
+
+    private void setDefault() {
+        setVisible(false);
+        SupplierDashboard.jPanel11.setBackground(primaryColor);
+        SupplierDashboard.jPanel12.setBackground(primaryColor);
+        SupplierDashboard.jLabel11.setForeground(textPrimaryColor);
+        SupplierDashboard.jLabel12.setVisible(true);
+        SupplierDashboard.jLabel20.setVisible(false);
+    }
 
     /**
      * @param args the command line arguments
@@ -354,15 +443,4 @@ public class SupplierAccount extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField9;
     // End of variables declaration//GEN-END:variables
 
-    private boolean isEmpty() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    private boolean check() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    private void setDefault() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 }

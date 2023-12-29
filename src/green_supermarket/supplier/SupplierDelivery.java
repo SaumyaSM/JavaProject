@@ -4,6 +4,14 @@
  */
 package green_supermarket.supplier;
 
+import green_supermarket.dao.Statistics;
+import green_supermarket.dao.SupplierDao;
+import java.awt.Color;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Lenovo
@@ -13,7 +21,20 @@ public class SupplierDelivery extends javax.swing.JFrame {
     /**
      * Creates new form SupplierDelivery
      */
-    public SupplierDelivery() {
+    SupplierDao supplierDao;
+    Statistics statistics;
+    Color notEdit = new Color(204, 204, 204);
+    Color textPrimaryColor = new Color(30, 30, 30);
+    Color primaryColor = new Color(255, 255, 255);
+    DefaultTableModel model;
+    int xx, xy;
+
+    /**
+     * Creates new form Manage_product
+     */
+    public SupplierDelivery() throws SQLException {
+        this.supplierDao = new SupplierDao();
+        this.statistics = new Statistics();
         initComponents();
     }
 
@@ -41,6 +62,16 @@ public class SupplierDelivery extends javax.swing.JFrame {
         setUndecorated(true);
 
         jPanel1.setBackground(new java.awt.Color(0, 153, 102));
+        jPanel1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                jPanel1MouseDragged(evt);
+            }
+        });
+        jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jPanel1MousePressed(evt);
+            }
+        });
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -59,6 +90,11 @@ public class SupplierDelivery extends javax.swing.JFrame {
             }
         });
         jTable1.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
@@ -127,9 +163,33 @@ public class SupplierDelivery extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jLabel11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel11MouseClicked
-        System.exit(0);
+        setDefault();
     }//GEN-LAST:event_jLabel11MouseClicked
 
+    private void jPanel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MousePressed
+        xx = evt.getX();
+        xy = evt.getY();
+    }//GEN-LAST:event_jPanel1MousePressed
+
+    private void jPanel1MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseDragged
+        int x = evt.getXOnScreen();
+        int y = evt.getYOnScreen();
+        this.setLocation(x - xx, y - xy);
+    }//GEN-LAST:event_jPanel1MouseDragged
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        statistics.supplier(supplierDao.getSupplierName(SupplierDashboard.SupplierEmail.getText()));
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void setDefault() {
+        setVisible(false);
+        SupplierDashboard.jPanel7.setBackground(primaryColor);
+        SupplierDashboard.jPanel8.setBackground(primaryColor);
+        SupplierDashboard.jLabel7.setForeground(textPrimaryColor);
+        SupplierDashboard.jLabel8.setVisible(true);
+        SupplierDashboard.jLabel18.setVisible(false);
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -160,7 +220,11 @@ public class SupplierDelivery extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new SupplierDelivery().setVisible(true);
+                try {
+                    new SupplierDelivery().setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(SupplierDelivery.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }

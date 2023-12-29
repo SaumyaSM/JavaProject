@@ -6,6 +6,7 @@ package green_supermarket.dao;
 
 import connection.MyConnection;
 import green_supermarket.admin.AdminDashboard;
+import green_supermarket.supplier.SupplierDashboard;
 import green_supermarket.user.UserDashboard;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -87,6 +88,20 @@ public class Statistics {
         }
         return total;
     }
+    
+    public int totalDeliveries(String name) {
+        int total = 0;
+        try {
+            st = con.createStatement();
+            rs = st.executeQuery("select sum(total) as 'total' from purchase where supplier = '"+name+"' and status = 'Received'");
+            if (rs.next()) {
+                total = rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Statistics.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return total;
+    }
 
     //admin dashhboard
     public void admin() {
@@ -103,5 +118,10 @@ public class Statistics {
         UserDashboard.jCat.setText(String.valueOf(total("category")));
         UserDashboard.jPro.setText(String.valueOf(total("product")));
         UserDashboard.jPur.setText(String.valueOf(totalPurchase(id)));
+    }
+    
+    //supplier
+    public void supplier(String name){
+        SupplierDashboard.jDel.setText(String.valueOf(totalDeliveries(name)));
     }
 }
