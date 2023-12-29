@@ -1,11 +1,6 @@
 
 package green_supermarket.supplier;
-
-import green_supermarket.user.ForgotPassword.SQLException;
 import green_supermarket.user.Login;
-import green_supermarket.user.Purchase;
-import green_supermarket.user.PurchaseDetails;
-import green_supermarket.user.UserAccount;
 import java.awt.Color;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -428,14 +423,10 @@ public class SupplierDashboard extends javax.swing.JFrame {
         jLabel7.setForeground(textSelectionColor);
         jLabel8.setVisible(false);
         jLabel18.setVisible(true);
-        Purchase purchase = null;
-        try {
-            purchase = new Purchase();
-        } catch (java.sql.SQLException ex) {
-            Logger.getLogger(SupplierDashboard.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        purchase.setVisible(true);
-        purchase.pack();
+        SupplierDelivery supplierDelivery = null;
+        supplierDelivery = new SupplierDelivery();
+        supplierDelivery.setVisible(true);
+        supplierDelivery.pack();
     }//GEN-LAST:event_jLabel7MouseClicked
 
     private void jPanel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel7MouseClicked
@@ -451,14 +442,10 @@ public class SupplierDashboard extends javax.swing.JFrame {
         jLabel9.setForeground(textSelectionColor);
         jLabel10.setVisible(false);
         jLabel19.setVisible(true);
-        PurchaseDetails purchaseDetails = null;
-        try {
-            purchaseDetails = new PurchaseDetails();
-        } catch (java.sql.SQLException ex) {
-            Logger.getLogger(SupplierDashboard.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        purchaseDetails.setVisible(true);
-        purchaseDetails.pack();
+        SupplierMyDelivery supplierMyDelivery = null;
+        supplierMyDelivery = new SupplierMyDelivery();
+        supplierMyDelivery.setVisible(true);
+        supplierMyDelivery.pack();
     }//GEN-LAST:event_jLabel9MouseClicked
 
     private void jLabel11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel11MouseClicked
@@ -470,14 +457,14 @@ public class SupplierDashboard extends javax.swing.JFrame {
         jLabel11.setForeground(textSelectionColor);
         jLabel12.setVisible(false);
         jLabel20.setVisible(true);
-        UserAccount userAccount = null;
+        SupplierAccount supplierAccount = null;
         try {
-            userAccount = new UserAccount();
+            supplierAccount = new SupplierAccount();
         } catch (java.sql.SQLException ex) {
             Logger.getLogger(SupplierDashboard.class.getName()).log(Level.SEVERE, null, ex);
         }
-        userAccount.setVisible(true);
-        userAccount.pack();
+        supplierAccount.setVisible(true);
+        supplierAccount.pack();
     }//GEN-LAST:event_jLabel11MouseClicked
 
     /**

@@ -192,7 +192,7 @@ public class Login extends javax.swing.JFrame {
         jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(175, 91, -1, -1));
 
         email.setBackground(new java.awt.Color(255, 255, 255));
-        email.setText("admin@gmail.com");
+        email.setText("saumyarsm@gmail.com");
         email.setOpaque(true);
         email.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

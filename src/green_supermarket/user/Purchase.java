@@ -4,6 +4,7 @@
  */
 package green_supermarket.user;
 
+import green_supermarket.dao.EmailSending;
 import green_supermarket.dao.ProductDao;
 import green_supermarket.dao.PurchaseDao;
 import green_supermarket.dao.Statistics;
@@ -30,6 +31,7 @@ public class Purchase extends javax.swing.JFrame {
     PurchaseDao purchaseDao;
     UserDao user = new UserDao();
     Statistics statistics;
+    EmailSending emailSending;
     ProductDao productDao = new ProductDao();
     Color textPrimaryColor = new Color(30, 30, 30);
     Color primaryColor = new Color(255, 255, 255);
@@ -44,6 +46,7 @@ public class Purchase extends javax.swing.JFrame {
     private int pID;
 
     public Purchase() throws SQLException {
+        this.emailSending = new EmailSending();
         this.statistics = new Statistics();
         this.purchaseDao = new PurchaseDao();
         initComponents();
@@ -371,7 +374,6 @@ public class Purchase extends javax.swing.JFrame {
         jTable1.clearSelection();
         price = 0.0;
         qty = 0;
-        statistics.admin();
     }
 
     private void jLabel11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel11MouseClicked
@@ -483,6 +485,7 @@ public class Purchase extends javax.swing.JFrame {
             }
             statistics.user(user.getUserId(email));
             JOptionPane.showMessageDialog(this, "Successfully purchased");
+            emailSending.sendemail();
         }else{
             JOptionPane.showMessageDialog(this, "You haven't purchased any products", "Warning", 2);
         }
@@ -508,7 +511,7 @@ public class Purchase extends javax.swing.JFrame {
         model = (DefaultTableModel) jTable2.getModel();
         if (model.getRowCount() > 0) {
             for (int i = 0; i < model.getRowCount(); i++) {
-                int newProID = Integer.parseInt(model.getValueAt(RowIndex, 0).toString());
+                int newProID = Integer.parseInt(model.getValueAt(i, 0).toString());
                 if (newProID == proID) {
                     return true;
                 }
@@ -584,11 +587,11 @@ public class Purchase extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
+    public static javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
+    public static javax.swing.JTextField jTextField4;
     // End of variables declaration//GEN-END:variables
 }

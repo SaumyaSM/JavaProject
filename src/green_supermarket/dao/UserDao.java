@@ -209,4 +209,21 @@ public class UserDao {
         }
             return id;
     }
+    
+    //get user email
+    public String getUserMail(int uid) {
+        String email = null;
+        try {
+            ps = con.prepareStatement("select uemail from user where uid = ?");
+            ps.setInt(1, uid);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                email = rs.getString(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            return email;
+    }
+    
 }
