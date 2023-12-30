@@ -4,11 +4,11 @@
  */
 package green_supermarket.user;
 
-import green_supermarket.dao.EmailSending;
 import green_supermarket.dao.ProductDao;
 import green_supermarket.dao.PurchaseDao;
 import green_supermarket.dao.Statistics;
 import green_supermarket.dao.UserDao;
+import green_supermarket.admin.Payment;
 import java.awt.Color;
 import java.awt.print.PrinterException;
 import java.sql.SQLException;
@@ -28,17 +28,17 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Purchase extends javax.swing.JFrame {
 
+    Payment payment;
     PurchaseDao purchaseDao;
     UserDao user = new UserDao();
     Statistics statistics;
-    EmailSending emailSending;
     ProductDao productDao = new ProductDao();
     Color textPrimaryColor = new Color(30, 30, 30);
     Color primaryColor = new Color(255, 255, 255);
     int xx, xy;
     private int qty = 0;
-    private double price = 0.0;
-    private double total = 0.0;
+    public double price = 0.0;
+    public static double total = 0.0;
     int RowIndex;
     DefaultTableModel model;
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
@@ -46,7 +46,7 @@ public class Purchase extends javax.swing.JFrame {
     private int pID;
 
     public Purchase() throws SQLException {
-        this.emailSending = new EmailSending();
+        this.payment = new Payment();
         this.statistics = new Statistics();
         this.purchaseDao = new PurchaseDao();
         initComponents();
@@ -484,8 +484,8 @@ public class Purchase extends javax.swing.JFrame {
                 purchaseDao.qtyUpdate(pid, newQuantity);                
             }
             statistics.user(user.getUserId(email));
-            JOptionPane.showMessageDialog(this, "Successfully purchased");
-            emailSending.sendemail(total);
+            payment.setVisible(rootPaneCheckingEnabled);
+            this.dispose();
         }else{
             JOptionPane.showMessageDialog(this, "You haven't purchased any products", "Warning", 2);
         }
@@ -583,12 +583,12 @@ public class Purchase extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
+    public static javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     public static javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
+    public static javax.swing.JTable jTable2;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;

@@ -100,6 +100,7 @@ public class PurchaseDao {
         return qty;
     }
     
+    
     //update product quantity
     public void qtyUpdate(int pid, int qty){
         String sql = "update product set pqty = ? where pid = ?";

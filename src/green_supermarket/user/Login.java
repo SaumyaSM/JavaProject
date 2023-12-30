@@ -202,7 +202,7 @@ public class Login extends javax.swing.JFrame {
         jPanel2.add(email, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 220, 275, 30));
 
         password.setBackground(new java.awt.Color(255, 255, 255));
-        password.setText("Admin123");
+        password.setText("Saumya890");
         password.setOpaque(true);
         password.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
