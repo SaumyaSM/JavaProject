@@ -5,7 +5,9 @@
 package green_supermarket.admin;
 
 import green_supermarket.dao.EmailSending;
+import green_supermarket.user.Login;
 import static green_supermarket.user.Purchase.total;
+import green_supermarket.user.UserDashboard;
 import java.sql.SQLException;
 import java.util.Random;
 import java.util.logging.Level;
@@ -189,7 +191,7 @@ public class Payment extends javax.swing.JFrame {
         {
             JOptionPane.showMessageDialog(null,"successfully payed");
             emailSending.sendemail(total);
-            System.exit(WIDTH);
+            this.dispose();
             
 
         }

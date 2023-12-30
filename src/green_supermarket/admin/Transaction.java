@@ -25,7 +25,8 @@ public class Transaction extends javax.swing.JFrame {
     Color primaryColor = new Color(255, 255, 255);
     int xx, xy;
     DefaultTableModel model;
-    public Transaction() throws SQLException{
+
+    public Transaction() throws SQLException {
         this.purchaseDao = new PurchaseDao();
         initComponents();
         TransactionTable();
@@ -55,6 +56,16 @@ public class Transaction extends javax.swing.JFrame {
         });
 
         jPanel2.setBackground(new java.awt.Color(0, 204, 102));
+        jPanel2.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                jPanel2MouseDragged(evt);
+            }
+        });
+        jPanel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jPanel2MousePressed(evt);
+            }
+        });
 
         jLabel11.setBackground(new java.awt.Color(0, 153, 102));
         jLabel11.setFont(new java.awt.Font("Kannada MN", 0, 24)); // NOI18N
@@ -70,10 +81,7 @@ public class Transaction extends javax.swing.JFrame {
 
         jTable3.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
+
             },
             new String [] {
                 "Purchase ID", "User ID", "Product ID", "Quantity", "Price", "Total", "Received Date", "Supplier Name"
@@ -128,6 +136,17 @@ public class Transaction extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    private void TransactionTable() {
+        purchaseDao.transaction(jTable3, "");
+        model = (DefaultTableModel) jTable3.getModel();
+        jTable3.setRowHeight(30);
+        jTable3.setShowGrid(true);
+        jTable3.setGridColor(Color.BLACK);
+        jTable3.setBackground(Color.WHITE);
+        jTable3.setSelectionBackground(Color.LIGHT_GRAY);
+    }
+    
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         for (double i = 0.1; i <= 1.0; i += 0.1) {
             String s = "" + i;
@@ -145,6 +164,17 @@ public class Transaction extends javax.swing.JFrame {
         setDefault();
     }//GEN-LAST:event_jLabel11MouseClicked
 
+    private void jPanel2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MousePressed
+        xx = evt.getX();
+        xy = evt.getY();
+    }//GEN-LAST:event_jPanel2MousePressed
+
+    private void jPanel2MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MouseDragged
+        int x = evt.getXOnScreen();
+        int y = evt.getYOnScreen();
+        this.setLocation(x - xx, y - xy);
+    }//GEN-LAST:event_jPanel2MouseDragged
+
     private void setDefault() {
         setVisible(false);
         AdminDashboard.jPanel16.setBackground(primaryColor);
@@ -153,17 +183,7 @@ public class Transaction extends javax.swing.JFrame {
         AdminDashboard.jLabel22.setVisible(true);
         AdminDashboard.jLabel23.setVisible(false);
     }
-    
-    private void TransactionTable() {
-        purchaseDao.transaction(jTable3, "");
-        model = (DefaultTableModel) jTable3.getModel();
-        jTable3.setRowHeight(30);
-        jTable3.setShowGrid(true);
-        jTable3.setGridColor(Color.BLACK);
-        jTable3.setBackground(Color.WHITE);
-        jTable3.setSelectionBackground(Color.LIGHT_GRAY);
-    }
-    
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

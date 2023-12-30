@@ -132,7 +132,7 @@ public class SupplierDao {
         int total = 0;
         try {
             st = con.createStatement ();
-            rs = st.executeQuery ("select count (*) as 'total' from supplier");
+            rs = st.executeQuery ("select count(*) as 'total' from supplier");
             if(rs.next ()){
                 total = rs.getInt (1) ;
             }
@@ -144,7 +144,7 @@ public class SupplierDao {
     
     //get supplier value
     public String[] getSupplierValue(int sid) {
-        String[] value = new String[9];
+        String[] value = new String[7];
         try {
             ps = con.prepareStatement("select * from supplier where sid = ?");
             ps.setInt(1, sid);
@@ -188,6 +188,22 @@ public class SupplierDao {
         }
     }
     
+    public String[] getSuppliers() {
+        String[] suppliers = new String[countSuppliers()];
+        try {
+            st = con.createStatement();
+            rs = st.executeQuery("select * from supplier");
+            int i = 0;
+            while (rs.next()) {
+                suppliers[i] = rs.getString(2);
+                i++;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SupplierDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return suppliers;
+    }
+    
     //get supplier id
     public int getSupplierId(String semail) {
         int sid = 0;
@@ -206,17 +222,17 @@ public class SupplierDao {
     
     //get supplier name
     public String getSupplierName(String semail) {
-        String sname = null;
+        String suppliername = null;
         try {
-            ps = con.prepareStatement("select sid from supplier where semail = ?");
+            ps = con.prepareStatement("select sname from supplier where semail = ?");
             ps.setString(1, semail);
             rs = ps.executeQuery();
             if (rs.next()) {
-                sname = rs.getString(1);
+                suppliername = rs.getString(1);
             }
         } catch (SQLException ex) {
             Logger.getLogger(SupplierDao.class.getName()).log(Level.SEVERE, null, ex);
         }
-            return sname;
+            return suppliername;
     }
 }

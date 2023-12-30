@@ -5,7 +5,9 @@
 package green_supermarket.supplier;
 
 import green_supermarket.dao.ProductDao;
+import green_supermarket.dao.PurchaseDao;
 import green_supermarket.dao.Statistics;
+import green_supermarket.dao.SupplierDao;
 import java.awt.Color;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -21,19 +23,25 @@ public class SupplierMyDelivery extends javax.swing.JFrame {
     /**
      * Creates new form SupplierMyDelivery
      */
+    SupplierDao supplierDao;
+    PurchaseDao purchaseDao;
     Statistics statistics;
     Color notEdit = new Color(204, 204, 204);
     Color textPrimaryColor = new Color(30, 30, 30);
     Color primaryColor = new Color(255, 255, 255);
     DefaultTableModel model;
+    private String suppliername;
     int xx, xy;
 
     /**
      * Creates new form Manage_product
      */
     public SupplierMyDelivery() throws SQLException {
+        this.supplierDao = new SupplierDao();
+        this.purchaseDao = new PurchaseDao();
         this.statistics = new Statistics();
         initComponents();
+        init();
     }
 
     /**
@@ -151,6 +159,21 @@ public class SupplierMyDelivery extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void init(){
+        suppliername = supplierDao.getSupplierName(SupplierDashboard.SupplierEmail.getText());
+        myDeliveredTable();
+    }
+    
+            
+    private void myDeliveredTable() {
+        purchaseDao.getSuppDeliProducts(jTable1, "", suppliername);
+        model = (DefaultTableModel) jTable1.getModel();
+        jTable1.setRowHeight(30);
+        jTable1.setShowGrid(true);
+        jTable1.setGridColor(Color.BLACK);
+        jTable1.setBackground(Color.WHITE);
+        jTable1.setSelectionBackground(Color.LIGHT_GRAY);
+    }
     
     private void jLabel11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel11MouseClicked
         setDefault();

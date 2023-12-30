@@ -18,6 +18,7 @@ import javax.swing.JOptionPane;
  */
 public class AdminDashboard extends javax.swing.JFrame {
 
+
     /**
      * Creates new form AdminDashboard
      */
@@ -62,7 +63,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        UserEmail = new javax.swing.JLabel();
+        AdminEmail = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
@@ -99,6 +100,11 @@ public class AdminDashboard extends javax.swing.JFrame {
         jLabel24 = new javax.swing.JLabel();
         jLabel25 = new javax.swing.JLabel();
         jLabel26 = new javax.swing.JLabel();
+        jPanel20 = new javax.swing.JPanel();
+        jPanel21 = new javax.swing.JPanel();
+        jLabel30 = new javax.swing.JLabel();
+        jLabel31 = new javax.swing.JLabel();
+        jLabel32 = new javax.swing.JLabel();
         jPanel13 = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -143,10 +149,10 @@ public class AdminDashboard extends javax.swing.JFrame {
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/green_supermarket/ic/shopping.png"))); // NOI18N
         jLabel2.setText("ONLINE SHOPPING");
 
-        UserEmail.setFont(new java.awt.Font("Helvetica Neue", 0, 17)); // NOI18N
-        UserEmail.setForeground(new java.awt.Color(255, 255, 255));
-        UserEmail.setIcon(new javax.swing.ImageIcon(getClass().getResource("/green_supermarket/ic/user.png"))); // NOI18N
-        UserEmail.setText("admin@gmail.com");
+        AdminEmail.setFont(new java.awt.Font("Helvetica Neue", 0, 17)); // NOI18N
+        AdminEmail.setForeground(new java.awt.Color(255, 255, 255));
+        AdminEmail.setIcon(new javax.swing.ImageIcon(getClass().getResource("/green_supermarket/ic/user.png"))); // NOI18N
+        AdminEmail.setText("admin@gmail.com");
 
         jLabel1.setFont(new java.awt.Font("Helvetica Neue", 1, 20)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -166,7 +172,7 @@ public class AdminDashboard extends javax.swing.JFrame {
                 .addGap(30, 30, 30)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(UserEmail)
+                .addComponent(AdminEmail)
                 .addGap(60, 60, 60)
                 .addComponent(jLabel1)
                 .addGap(40, 40, 40))
@@ -177,7 +183,7 @@ public class AdminDashboard extends javax.swing.JFrame {
                 .addGap(14, 14, 14)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(UserEmail)
+                    .addComponent(AdminEmail)
                     .addComponent(jLabel1))
                 .addContainerGap(20, Short.MAX_VALUE))
         );
@@ -453,6 +459,40 @@ public class AdminDashboard extends javax.swing.JFrame {
         jLabel26.setIcon(new javax.swing.ImageIcon(getClass().getResource("/green_supermarket/ic/supplier_light.png"))); // NOI18N
         jPanel18.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, -1, 30));
 
+        jPanel20.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel20.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel21.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout jPanel21Layout = new javax.swing.GroupLayout(jPanel21);
+        jPanel21.setLayout(jPanel21Layout);
+        jPanel21Layout.setHorizontalGroup(
+            jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 10, Short.MAX_VALUE)
+        );
+        jPanel21Layout.setVerticalGroup(
+            jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 50, Short.MAX_VALUE)
+        );
+
+        jPanel20.add(jPanel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 50));
+
+        jLabel30.setFont(new java.awt.Font("Helvetica Neue", 1, 24)); // NOI18N
+        jLabel30.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel30.setText("Select Supplier");
+        jLabel30.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel30MouseClicked(evt);
+            }
+        });
+        jPanel20.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(104, 6, -1, 38));
+
+        jLabel31.setIcon(new javax.swing.ImageIcon(getClass().getResource("/green_supermarket/ic/supplier_dark.png"))); // NOI18N
+        jPanel20.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(62, 6, -1, 38));
+
+        jLabel32.setIcon(new javax.swing.ImageIcon(getClass().getResource("/green_supermarket/ic/supplier_light.png"))); // NOI18N
+        jPanel20.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(62, 6, -1, 38));
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -465,6 +505,7 @@ public class AdminDashboard extends javax.swing.JFrame {
             .addComponent(jPanel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel18, javax.swing.GroupLayout.DEFAULT_SIZE, 360, Short.MAX_VALUE)
+            .addComponent(jPanel20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -483,6 +524,8 @@ public class AdminDashboard extends javax.swing.JFrame {
                 .addComponent(jPanel18, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jPanel20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(505, Short.MAX_VALUE))
@@ -761,6 +804,22 @@ public class AdminDashboard extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_formWindowOpened
 
+    private void jLabel30MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel30MouseClicked
+        jPanel20.setBackground(selectionColor);
+        jPanel21.setBackground(sideColor);
+        jLabel30.setForeground(textSelectionColor);
+        jLabel31.setVisible(false);
+        jLabel32.setVisible(true);
+        SelectSupplier selectSupplier = null;
+        try {
+            selectSupplier = new SelectSupplier();
+        } catch (SQLException ex) {
+            Logger.getLogger(AdminDashboard.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        selectSupplier.setVisible(true);
+        selectSupplier.pack();
+    }//GEN-LAST:event_jLabel30MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -798,7 +857,7 @@ public class AdminDashboard extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public static javax.swing.JLabel UserEmail;
+    public static javax.swing.JLabel AdminEmail;
     public static javax.swing.JLabel jCat;
     private javax.swing.JLabel jLabel1;
     public static javax.swing.JLabel jLabel10;
@@ -822,6 +881,9 @@ public class AdminDashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
+    public static javax.swing.JLabel jLabel30;
+    public static javax.swing.JLabel jLabel31;
+    public static javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -840,6 +902,8 @@ public class AdminDashboard extends javax.swing.JFrame {
     public static javax.swing.JPanel jPanel18;
     public static javax.swing.JPanel jPanel19;
     private javax.swing.JPanel jPanel2;
+    public static javax.swing.JPanel jPanel20;
+    public static javax.swing.JPanel jPanel21;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;

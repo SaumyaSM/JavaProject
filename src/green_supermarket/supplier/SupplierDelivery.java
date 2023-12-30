@@ -4,10 +4,14 @@
  */
 package green_supermarket.supplier;
 
+import green_supermarket.dao.PurchaseDao;
 import green_supermarket.dao.Statistics;
 import green_supermarket.dao.SupplierDao;
 import java.awt.Color;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
@@ -21,21 +25,29 @@ public class SupplierDelivery extends javax.swing.JFrame {
     /**
      * Creates new form SupplierDelivery
      */
+    PurchaseDao purchaseDao;
     SupplierDao supplierDao;
     Statistics statistics;
-    Color notEdit = new Color(204, 204, 204);
     Color textPrimaryColor = new Color(30, 30, 30);
     Color primaryColor = new Color(255, 255, 255);
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+    Date date = new Date();
     DefaultTableModel model;
+    int RowIndex;
+    private String suppliername;
     int xx, xy;
 
     /**
      * Creates new form Manage_product
+     *
+     * @throws java.sql.SQLException
      */
     public SupplierDelivery() throws SQLException {
+        this.purchaseDao = new PurchaseDao();
         this.supplierDao = new SupplierDao();
         this.statistics = new Statistics();
         initComponents();
+        init();
     }
 
     /**
@@ -60,6 +72,7 @@ public class SupplierDelivery extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(0, 153, 102));
         jPanel1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
@@ -118,7 +131,7 @@ public class SupplierDelivery extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(16, Short.MAX_VALUE)
+                .addGap(16, 16, 16)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 849, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -147,20 +160,26 @@ public class SupplierDelivery extends javax.swing.JFrame {
                 .addGap(27, 27, 27))
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void init() {       
+        suppliername = supplierDao.getSupplierName(SupplierDashboard.SupplierEmail.getText());
+        purchaseTable();
+    }
+
+    private void purchaseTable() {
+        purchaseDao.getOntheWayProductsValue(jTable1, "", suppliername);
+        model = (DefaultTableModel) jTable1.getModel();
+        jTable1.setRowHeight(30);
+        jTable1.setShowGrid(true);
+        jTable1.setGridColor(Color.BLACK);
+        jTable1.setBackground(Color.WHITE);
+        jTable1.setSelectionBackground(Color.LIGHT_GRAY);
+    }
 
     private void jLabel11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel11MouseClicked
         setDefault();
@@ -178,6 +197,16 @@ public class SupplierDelivery extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanel1MouseDragged
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        model = (DefaultTableModel) jTable1.getModel();
+        RowIndex = jTable1.getSelectedRow();
+
+        int sID = Integer.parseInt(model.getValueAt(RowIndex, 0).toString());
+        String receivedDate = sdf.format(date);
+        String status = "Received";
+        purchaseDao.setDateStatus(sID, receivedDate, status);
+        jTable1.setModel(new DefaultTableModel(null, new Object[]{"Purchase ID", "User ID",
+            "Total", "Purchase Date", "Address", "Received Date", "Supplier Name", "Status"}));
+        purchaseDao.getOntheWayProductsValue(jTable1, "", suppliername);
         statistics.supplier(supplierDao.getSupplierName(SupplierDashboard.SupplierEmail.getText()));
     }//GEN-LAST:event_jTable1MouseClicked
 
@@ -189,7 +218,7 @@ public class SupplierDelivery extends javax.swing.JFrame {
         SupplierDashboard.jLabel8.setVisible(true);
         SupplierDashboard.jLabel18.setVisible(false);
     }
-    
+
     /**
      * @param args the command line arguments
      */

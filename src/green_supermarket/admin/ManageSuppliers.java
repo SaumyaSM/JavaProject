@@ -323,7 +323,7 @@ public class ManageSuppliers extends javax.swing.JFrame {
 
     private void init() {
         setLocation(410, 300);
-        sID = supplier.getSupplierId(AdminDashboard.UserEmail.getText());
+        sID = supplier.getSupplierId(AdminDashboard.AdminEmail.getText());
         value = supplier.getSupplierValue(sID);
         supplierTable();
         setValue();

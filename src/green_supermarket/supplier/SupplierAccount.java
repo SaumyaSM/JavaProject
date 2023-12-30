@@ -5,8 +5,6 @@
 package green_supermarket.supplier;
 
 import green_supermarket.dao.SupplierDao;
-import green_supermarket.dao.UserDao;
-import static green_supermarket.user.ForgotPassword.jTextField2;
 import java.awt.Color;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -29,6 +27,7 @@ public class SupplierAccount extends javax.swing.JFrame {
     public SupplierAccount() throws SQLException {
         this.supplier = new SupplierDao();
         initComponents();
+        init();
     }
 
     /**

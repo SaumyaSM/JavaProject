@@ -350,7 +350,7 @@ public class ManageUser extends javax.swing.JFrame {
 
     private void init() {
         setLocation(410, 300);
-        uID = user.getUserId(AdminDashboard.UserEmail.getText());
+        uID = user.getUserId(AdminDashboard.AdminEmail.getText());
         value = user.getUserValue(uID);
         userTable();
         setValue();

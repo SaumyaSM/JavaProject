@@ -192,7 +192,6 @@ public class Login extends javax.swing.JFrame {
         jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(175, 91, -1, -1));
 
         email.setBackground(new java.awt.Color(255, 255, 255));
-        email.setText("saumyarsm@gmail.com");
         email.setOpaque(true);
         email.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -202,7 +201,6 @@ public class Login extends javax.swing.JFrame {
         jPanel2.add(email, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 220, 275, 30));
 
         password.setBackground(new java.awt.Color(255, 255, 255));
-        password.setText("Saumya890");
         password.setOpaque(true);
         password.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -431,6 +429,7 @@ public class Login extends javax.swing.JFrame {
                         SupplierDashboard sd = new SupplierDashboard();
                         sd.setVisible(true);
                         sd.pack();
+                        SupplierDashboard.SupplierEmail.setText(Email);
                         statistics.supplier(rs.getString(2));
                         this.dispose();
                     } else {
@@ -451,6 +450,7 @@ public class Login extends javax.swing.JFrame {
                         AdminDashboard ad = new AdminDashboard();
                         ad.setVisible(true);
                         ad.pack();
+                        AdminDashboard.AdminEmail.setText(Email);
                         statistics.admin();
                         this.dispose();
                     } else {
