@@ -3,19 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Users/saumya/Documents/GitHub/JavaProject/src/green_supermarket/supplier/SupplierDashboard.java</file>
+            <file>file:/Users/saumya/Documents/GitHub/JavaProject/src/green_supermarket/supplier/SupplierAccount.java</file>
             <file>file:/Users/saumya/Documents/GitHub/JavaProject/src/green_supermarket/dao/PurchaseDao.java</file>
-            <file>file:/Users/saumya/Documents/GitHub/JavaProject/src/green_supermarket/dao/EmailSending.java</file>
-            <file>file:/Users/saumya/Documents/GitHub/JavaProject/src/green_supermarket/user/Purchase.java</file>
-            <file>file:/Users/saumya/Documents/GitHub/JavaProject/src/green_supermarket/dao/Statistics.java</file>
+            <file>file:/Users/saumya/Documents/GitHub/JavaProject/src/green_supermarket/admin/Payment.java</file>
             <file>file:/Users/saumya/Documents/GitHub/JavaProject/src/green_supermarket/dao/SupplierDao.java</file>
-            <file>file:/Users/saumya/Documents/GitHub/JavaProject/src/green_supermarket/admin/AdminDashboard.java</file>
-            <file>file:/Users/saumya/Documents/GitHub/JavaProject/src/green_supermarket/dao/ProductDao.java</file>
             <file>file:/Users/saumya/Documents/GitHub/JavaProject/src/green_supermarket/admin/Transaction.java</file>
+            <file>file:/Users/saumya/Documents/GitHub/JavaProject/src/green_supermarket/user/UserAccount.java</file>
             <file>file:/Users/saumya/Documents/GitHub/JavaProject/src/green_supermarket/user/PurchaseDetails.java</file>
             <file>file:/Users/saumya/Documents/GitHub/JavaProject/src/green_supermarket/user/Login.java</file>
-            <file>file:/Users/saumya/Documents/GitHub/JavaProject/src/connection/MyConnection.java</file>
-            <file>file:/Users/saumya/Documents/GitHub/JavaProject/src/green_supermarket/user/UserDashboard.java</file>
         </group>
     </open-files>
 </project-private>
