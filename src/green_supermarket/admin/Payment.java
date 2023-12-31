@@ -8,6 +8,7 @@ import green_supermarket.dao.EmailSending;
 import green_supermarket.user.Login;
 import static green_supermarket.user.Purchase.total;
 import green_supermarket.user.UserDashboard;
+import java.awt.Color;
 import java.sql.SQLException;
 import java.util.Random;
 import java.util.logging.Level;
@@ -24,6 +25,8 @@ public class Payment extends javax.swing.JFrame {
      * Creates new form Payment
      */
     EmailSending emailSending;
+    Color textPrimaryColor = new Color(30, 30, 30);
+    Color primaryColor = new Color(255, 255, 255);
     
     public Payment() throws SQLException{
         this.emailSending = new EmailSending();
@@ -46,11 +49,11 @@ public class Payment extends javax.swing.JFrame {
         holdername = new javax.swing.JTextField();
         cardno = new javax.swing.JTextField();
         captcha = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
-        jToggleButton1 = new javax.swing.JToggleButton();
-        jTextField6 = new javax.swing.JTextField();
+        getcvv = new javax.swing.JTextField();
+        generatebutton = new javax.swing.JToggleButton();
+        getcaptcha = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        pay = new javax.swing.JButton();
+        paybutton = new javax.swing.JButton();
         Payhere = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -83,39 +86,39 @@ public class Payment extends javax.swing.JFrame {
             }
         });
         jPanel2.add(captcha, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 330, 130, 50));
-        jPanel2.add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 220, 130, -1));
+        jPanel2.add(getcvv, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 220, 130, -1));
 
-        jToggleButton1.setBackground(new java.awt.Color(51, 204, 0));
-        jToggleButton1.setForeground(new java.awt.Color(0, 0, 0));
-        jToggleButton1.setSelected(true);
-        jToggleButton1.setText("Generate Captcha");
-        jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
+        generatebutton.setBackground(new java.awt.Color(51, 204, 0));
+        generatebutton.setForeground(new java.awt.Color(0, 0, 0));
+        generatebutton.setSelected(true);
+        generatebutton.setText("Generate Captcha");
+        generatebutton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButton1ActionPerformed(evt);
+                generatebuttonActionPerformed(evt);
             }
         });
-        jPanel2.add(jToggleButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 340, -1, -1));
+        jPanel2.add(generatebutton, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 340, -1, -1));
 
-        jTextField6.addActionListener(new java.awt.event.ActionListener() {
+        getcaptcha.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField6ActionPerformed(evt);
+                getcaptchaActionPerformed(evt);
             }
         });
-        jPanel2.add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 280, 130, -1));
+        jPanel2.add(getcaptcha, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 280, 130, -1));
 
         jLabel4.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel4.setText("Captcha");
         jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 280, -1, -1));
 
-        pay.setBackground(new java.awt.Color(51, 204, 0));
-        pay.setFont(new java.awt.Font("Trebuchet MS", 1, 18)); // NOI18N
-        pay.setText("PAY");
-        pay.addActionListener(new java.awt.event.ActionListener() {
+        paybutton.setBackground(new java.awt.Color(51, 204, 0));
+        paybutton.setFont(new java.awt.Font("Trebuchet MS", 1, 18)); // NOI18N
+        paybutton.setText("PAY");
+        paybutton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                payActionPerformed(evt);
+                paybuttonActionPerformed(evt);
             }
         });
-        jPanel2.add(pay, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 410, -1, -1));
+        jPanel2.add(paybutton, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 410, -1, -1));
 
         Payhere.setFont(new java.awt.Font("Trebuchet MS", 1, 36)); // NOI18N
         Payhere.setText("Pay Here");
@@ -131,7 +134,7 @@ public class Payment extends javax.swing.JFrame {
 
     }//GEN-LAST:event_captchaActionPerformed
 
-    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
+    private void generatebuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generatebuttonActionPerformed
         String contain="1234567890abcdefghijklmnopqrstuvwxyz";
         Random r=new Random();
         StringBuilder sb=new StringBuilder(7);
@@ -144,18 +147,18 @@ public class Payment extends javax.swing.JFrame {
         captcha.setText(random);
 
         // // TODO add your handling code here:
-    }//GEN-LAST:event_jToggleButton1ActionPerformed
+    }//GEN-LAST:event_generatebuttonActionPerformed
 
-    private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
+    private void getcaptchaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_getcaptchaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField6ActionPerformed
+    }//GEN-LAST:event_getcaptchaActionPerformed
 
-    private void payActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_payActionPerformed
+    private void paybuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paybuttonActionPerformed
         String c, cvv,number,name;
         name=holdername.getText();
-        c=jTextField6.getText();
+        c=getcaptcha.getText();
         number=cardno.getText();
-        cvv=jTextField5.getText();
+        cvv=getcvv.getText();
 
         @SuppressWarnings("UnusedAssignment")
         boolean valid = true;
@@ -191,9 +194,8 @@ public class Payment extends javax.swing.JFrame {
         {
             JOptionPane.showMessageDialog(null,"successfully payed");
             emailSending.sendemail(total);
-            this.dispose();
-            
-
+            setDefault();
+            this.dispose();        
         }
         else{
             JOptionPane.showMessageDialog(null,"Try again");
@@ -207,8 +209,17 @@ public class Payment extends javax.swing.JFrame {
             dispose();
         }
 
-    }//GEN-LAST:event_payActionPerformed
+    }//GEN-LAST:event_paybuttonActionPerformed
 
+    private void setDefault(){
+        setVisible(false);
+        UserDashboard.jPanel7.setBackground(primaryColor);
+        UserDashboard.jPanel8.setBackground(primaryColor);
+        UserDashboard.jLabel7.setForeground(textPrimaryColor);
+        UserDashboard.jLabel8.setVisible(true);
+        UserDashboard.jLabel18.setVisible(false);
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -252,15 +263,15 @@ public class Payment extends javax.swing.JFrame {
     private javax.swing.JLabel Payhere;
     private javax.swing.JTextField captcha;
     public static javax.swing.JTextField cardno;
+    private javax.swing.JToggleButton generatebutton;
+    private javax.swing.JTextField getcaptcha;
+    private javax.swing.JTextField getcvv;
     private javax.swing.JTextField holdername;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JToggleButton jToggleButton1;
-    private javax.swing.JButton pay;
+    private javax.swing.JButton paybutton;
     // End of variables declaration//GEN-END:variables
 }
