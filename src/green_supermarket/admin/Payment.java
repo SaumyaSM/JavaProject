@@ -43,15 +43,15 @@ public class Payment extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
+        holdername = new javax.swing.JTextField();
+        cardno = new javax.swing.JTextField();
         captcha = new javax.swing.JTextField();
         jTextField5 = new javax.swing.JTextField();
         jToggleButton1 = new javax.swing.JToggleButton();
         jTextField6 = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         pay = new javax.swing.JButton();
-        jLabel6 = new javax.swing.JLabel();
+        Payhere = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -71,8 +71,8 @@ public class Payment extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel3.setText("CVV");
         jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 220, -1, -1));
-        jPanel2.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 100, 130, -1));
-        jPanel2.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 160, 130, -1));
+        jPanel2.add(holdername, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 100, 130, -1));
+        jPanel2.add(cardno, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 160, 130, -1));
 
         captcha.setEditable(false);
         captcha.setBackground(new java.awt.Color(255, 255, 255));
@@ -117,9 +117,9 @@ public class Payment extends javax.swing.JFrame {
         });
         jPanel2.add(pay, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 410, -1, -1));
 
-        jLabel6.setFont(new java.awt.Font("Trebuchet MS", 1, 36)); // NOI18N
-        jLabel6.setText("Pay Here");
-        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 20, -1, -1));
+        Payhere.setFont(new java.awt.Font("Trebuchet MS", 1, 36)); // NOI18N
+        Payhere.setText("Pay Here");
+        jPanel2.add(Payhere, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 20, -1, -1));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 680, 480));
 
@@ -152,9 +152,9 @@ public class Payment extends javax.swing.JFrame {
 
     private void payActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_payActionPerformed
         String c, cvv,number,name;
-        name=jTextField1.getText();
+        name=holdername.getText();
         c=jTextField6.getText();
-        number=jTextField3.getText();
+        number=cardno.getText();
         cvv=jTextField5.getText();
 
         @SuppressWarnings("UnusedAssignment")
@@ -249,15 +249,15 @@ public class Payment extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Payhere;
     private javax.swing.JTextField captcha;
+    public static javax.swing.JTextField cardno;
+    private javax.swing.JTextField holdername;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField jTextField1;
-    public static javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField6;
     private javax.swing.JToggleButton jToggleButton1;
